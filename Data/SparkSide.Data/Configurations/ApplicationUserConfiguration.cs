@@ -28,6 +28,48 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasMany(e => e.ActiveChallenges)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+               .HasMany(e => e.Comments)
+               .WithOne()
+               .HasForeignKey(e => e.AuthorId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+               .HasMany(e => e.CreatedChallenges)
+               .WithOne(e => e.Author)
+               .HasForeignKey(e => e.AuthorId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+               .HasMany(e => e.FavouriteChallenges)
+               .WithOne()
+               .HasForeignKey(e => e.UserId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+               .HasMany(e => e.SiteAlerts)
+               .WithOne()
+               .HasForeignKey(e => e.AuthorId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasMany(e => e.FollowedUsers)
+                .WithOne(e => e.Follower)
+                .HasForeignKey(e => e.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            appUser
+                .HasMany(e => e.FollowedByUsers)
+                .WithOne(e => e.Followed)
+                .HasForeignKey(e => e.FollowedId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

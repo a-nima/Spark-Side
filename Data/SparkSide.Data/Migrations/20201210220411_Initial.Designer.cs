@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SparkSide.Data;
 
 namespace SparkSide.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201210220411_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,57 +332,6 @@ namespace SparkSide.Data.Migrations
                     b.ToTable("ChallengesTags");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.ChallengeTask", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ChallengeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChallengeId1")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChallengeId");
-
-                    b.HasIndex("ChallengeId1");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("ChallengeTasks");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -628,46 +579,6 @@ namespace SparkSide.Data.Migrations
                     b.ToTable("UsersChallengesFavourite");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.UserChallengeTask", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ChallengeTaskId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CompletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChallengeTaskId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UsersChallengeTasks");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.UserFollow", b =>
                 {
                     b.Property<int>("Id")
@@ -789,21 +700,6 @@ namespace SparkSide.Data.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.ChallengeTask", b =>
-                {
-                    b.HasOne("SparkSide.Data.Models.Challenge", null)
-                        .WithMany("ChallengeTasks")
-                        .HasForeignKey("ChallengeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
-                        .WithMany()
-                        .HasForeignKey("ChallengeId1");
-
-                    b.Navigation("Challenge");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.Comment", b =>
                 {
                     b.HasOne("SparkSide.Data.Models.ApplicationUser", null)
@@ -894,25 +790,6 @@ namespace SparkSide.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.UserChallengeTask", b =>
-                {
-                    b.HasOne("SparkSide.Data.Models.ChallengeTask", "ChallengeTask")
-                        .WithMany("UserChallengeTasks")
-                        .HasForeignKey("ChallengeTaskId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ChallengeTask");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.UserFollow", b =>
                 {
                     b.HasOne("SparkSide.Data.Models.ApplicationUser", "Followed")
@@ -955,8 +832,6 @@ namespace SparkSide.Data.Migrations
 
             modelBuilder.Entity("SparkSide.Data.Models.Challenge", b =>
                 {
-                    b.Navigation("ChallengeTasks");
-
                     b.Navigation("Comments");
 
                     b.Navigation("Tags");
@@ -964,11 +839,6 @@ namespace SparkSide.Data.Migrations
                     b.Navigation("UsersWithActiveChallenge");
 
                     b.Navigation("UsersWithFavouriteChallenge");
-                });
-
-            modelBuilder.Entity("SparkSide.Data.Models.ChallengeTask", b =>
-                {
-                    b.Navigation("UserChallengeTasks");
                 });
 
             modelBuilder.Entity("SparkSide.Data.Models.Tag", b =>

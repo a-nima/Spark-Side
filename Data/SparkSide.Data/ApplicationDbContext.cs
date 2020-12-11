@@ -26,6 +26,27 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Challenge> Challenges { get; set; }
+
+        public DbSet<ChallengeTag> ChallengesTags { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<SiteAlert> SiteAlerts { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<UserChallengeActive> UsersChallengesActive { get; set; }
+
+        public DbSet<UserChallengeFavourite> UsersChallengesFavourite { get; set; }
+
+        public DbSet<UserFollow> UsersFollows { get; set; }
+
+        public DbSet<UserChallengeTask> UsersChallengeTasks { get; set; }
+
+        public DbSet<ChallengeTask> ChallengeTasks { get; set; }
+
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
