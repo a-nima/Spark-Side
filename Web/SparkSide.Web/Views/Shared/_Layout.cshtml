@@ -5,79 +5,95 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/material.css">
+    <link rel="stylesheet" href="~/css/custom-material.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 </head>
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
+        <header class="mdl-layout__header red-gradient">
             <div class="mdl-layout__header-row">
+                <div class="full-logo"><h3 class="logo">SPARKSIDE</h3></div>
+                <div class="small-logo"><h3 class="logo">SS</h3></div>
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
                     <label class="mdl-button mdl-js-button mdl-button--icon"
                            for="fixed-header-drawer-exp">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons align-search">search</i>
                     </label>
                     <div class="mdl-textfield__expandable-holder">
                         <input class="mdl-textfield__input" type="text" name="sample"
                                id="fixed-header-drawer-exp">
                     </div>
                 </div>
+                <label class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">settings</i>
+                </label>
+                <label class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">notifications_none</i>
+                </label>
+                <label class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">perm_identity</i>
+                </label>
             </div>
         </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">SparkSide</span>
+        <div class="mdl-layout__drawer custom-menu is-casting-shadow">
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Dashboard</a>
-                <a class="mdl-navigation__link" href="">Challenges</a>
-                <a class="mdl-navigation__link" href="">Help</a>
+                <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
+                <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">favorite_border</i>My Challenges</a>
+                <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">star_border</i>Favourite</a>
+                <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">explore</i>Explore</a>
+                <a class="mdl-navigation__link" href="">About</a>
             </nav>
         </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                @this.RenderBody()
-            </div>
-        </main>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    @this.RenderBody()
+                </div>
+            </main>
+        <div class="right-section">
+
+        </div>
     </div>
     @*<header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>*@
+            </nav>
+        </header>*@
 
     @*<div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-        </main>
-    </div>*@
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+            </main>
+        </div>*@
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>

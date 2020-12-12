@@ -36,4 +36,8 @@
     <ProjectReference Include="..\SparkSide.Web.Infrastructure\SparkSide.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SparkSide.Web.ViewModels\SparkSide.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\NewFolder\" />
+  </ItemGroup>
 </Project>
