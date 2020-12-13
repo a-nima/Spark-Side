@@ -46,6 +46,12 @@
 
         public DbSet<ChallengeTask> ChallengeTasks { get; set; }
 
+        public DbSet<Achievement> Achievements { get; set; }
+
+        public DbSet<Like> Likes { get; set; }
+
+        public DbSet<UserAchievement> UsersAchievements { get; set; }
+
 
         public override int SaveChanges() => this.SaveChanges(true);
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SparkSide.Data;
 
 namespace SparkSide.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201212002428_AddAchievementsAndLikesAgain")]
+    partial class AddAchievementsAndLikesAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,41 +125,6 @@ namespace SparkSide.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.Achievement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IconUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Achievements");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -205,9 +172,6 @@ namespace SparkSide.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AchievementId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -267,8 +231,6 @@ namespace SparkSide.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AchievementId");
 
                     b.HasIndex("IsDeleted");
 
@@ -473,43 +435,6 @@ namespace SparkSide.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.Like", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserAchievementId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserAchievementId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Likes");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -616,43 +541,6 @@ namespace SparkSide.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("SparkSide.Data.Models.UserAchievement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("AchievementId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AchievementId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UsersAchievements");
                 });
 
             modelBuilder.Entity("SparkSide.Data.Models.UserChallengeActive", b =>
@@ -869,13 +757,6 @@ namespace SparkSide.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("SparkSide.Data.Models.Achievement", null)
-                        .WithMany("Users")
-                        .HasForeignKey("AchievementId");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.Challenge", b =>
                 {
                     b.HasOne("SparkSide.Data.Models.ApplicationUser", "Author")
@@ -952,25 +833,6 @@ namespace SparkSide.Data.Migrations
                     b.Navigation("Challenge");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.Like", b =>
-                {
-                    b.HasOne("SparkSide.Data.Models.UserAchievement", "UserAchievement")
-                        .WithMany("UserAchievementLikes")
-                        .HasForeignKey("UserAchievementId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("UserAchievement");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.SiteAlert", b =>
                 {
                     b.HasOne("SparkSide.Data.Models.ApplicationUser", null)
@@ -984,25 +846,6 @@ namespace SparkSide.Data.Migrations
                         .HasForeignKey("AuthorId1");
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("SparkSide.Data.Models.UserAchievement", b =>
-                {
-                    b.HasOne("SparkSide.Data.Models.Achievement", "Achievement")
-                        .WithMany()
-                        .HasForeignKey("AchievementId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Achievement");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SparkSide.Data.Models.UserChallengeActive", b =>
@@ -1089,11 +932,6 @@ namespace SparkSide.Data.Migrations
                     b.Navigation("Follower");
                 });
 
-            modelBuilder.Entity("SparkSide.Data.Models.Achievement", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("SparkSide.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("ActiveChallenges");
@@ -1138,11 +976,6 @@ namespace SparkSide.Data.Migrations
             modelBuilder.Entity("SparkSide.Data.Models.Tag", b =>
                 {
                     b.Navigation("Challenges");
-                });
-
-            modelBuilder.Entity("SparkSide.Data.Models.UserAchievement", b =>
-                {
-                    b.Navigation("UserAchievementLikes");
                 });
 #pragma warning restore 612, 618
         }
