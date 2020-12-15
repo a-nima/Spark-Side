@@ -23,6 +23,10 @@ namespace SparkSide.Data.Models
             this.SiteAlerts = new HashSet<SiteAlert>();
         }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }

@@ -1,0 +1,111 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<center>
+    <div class="mdl-card user-form mdl-shadow--2dp">
+        <div class="user-form-header">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div id="register" class="col s12">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" asp-for="Input.FirstName">First Name</label>
+                    <input class="mdl-textfield__input" asp-for="Input.FirstName" type="text">
+                    <span class="textfield__error" asp-validation-for="Input.FirstName"></span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" asp-for="Input.LastName">Last Name</label>
+                    <input class="mdl-textfield__input" asp-for="Input.LastName" type="text">
+                    <span class="textfield__error" asp-validation-for="Input.LastName"></span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" asp-for="Input.Email">Email</label>
+                    <input class="mdl-textfield__input" asp-for="Input.Email" type="email">
+                    <span class="textfield__error" asp-validation-for="Input.Email"></span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" asp-for="Input.Password">Password</label>
+                    <input class="mdl-textfield__input" asp-for="Input.Password" type="password">
+                    <span class="textfield__error" asp-validation-for="Input.Password"></span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <input class="mdl-textfield__input" asp-for="Input.ConfirmPassword" type="password">
+                    <span class="textfield__error" asp-validation-for="Input.ConfirmPassword"></span>
+                </div>
+                <center>
+                    <button class="mdl-button--colored mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action">Register</button>
+                    <br />
+                    <br />
+                    <p>
+                        <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Log in</a>
+                    </p>
+                </center>
+            </form>
+        </div>
+    </div>
+</center>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Create a new account.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+        <div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4>Use another service to register.</h4>
+                <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }
+            </section>
+        </div>
+    </div>*@

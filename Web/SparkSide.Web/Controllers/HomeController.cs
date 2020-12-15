@@ -5,11 +5,17 @@
     using SparkSide.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     public class HomeController : BaseController
     {
         public IActionResult Index()
         {
+            if (User?.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return this.RedirectToAction("Dashboard", "Home");
+            }
+
             return this.View();
         }
 
@@ -23,6 +29,13 @@
         {
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult Dashboard()
+        {
+
+            return this.View();
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿@using SparkSide.Common
+@{
+    this.ViewData["Title"] = "Dashboard";
+}
+
+<div>
+    <div class="page-title">
+        @{
+            string greeting = "Welcome";
+            if (DateTime.Now.TimeOfDay.Hours >= 6)
+            {
+                greeting = "Good morning";
+            }
+            else if (DateTime.Now.TimeOfDay.Hours >= 12)
+            {
+                greeting = "Good afternoon";
+            }
+            else if (DateTime.Now.TimeOfDay.Hours >= 20 || DateTime.Now.TimeOfDay.Hours < 6)
+            {
+                greeting = "Good evening";
+            }
+            
+
+        }
+        <h3>@greeting.</h3>
+    </div>
+</div>
