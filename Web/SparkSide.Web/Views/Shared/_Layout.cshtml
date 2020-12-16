@@ -40,10 +40,10 @@
         {
             <div class="mdl-layout__drawer custom-menu is-casting-shadow">
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
+                    <a class="mdl-navigation__link" asp-controller="Home" asp-action="Index"><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
                     <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">favorite_border</i>My Challenges</a>
                     <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">star_border</i>Favourite</a>
-                    <a class="mdl-navigation__link" href=""><i class="material-icons menu-icon">explore</i>Explore</a>
+                    <a class="mdl-navigation__link" asp-controller="Explore" asp-action="AllChallenges"><i class="material-icons menu-icon">explore</i>Explore</a>
                     <a class="mdl-navigation__link" href="">About</a>
                 </nav>
             </div>

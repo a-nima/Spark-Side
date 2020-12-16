@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+    using SparkSide.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
@@ -16,7 +17,7 @@
                 return this.RedirectToAction("Dashboard", "Home");
             }
 
-            return this.View();
+            return this.RedirectToAction("AllChallenges", "Explore");
         }
 
         public IActionResult Privacy()
@@ -35,7 +36,7 @@
         public IActionResult Dashboard()
         {
 
-            return this.View();
+            return this.View(new DashboardViewModel());
         }
     }
 }

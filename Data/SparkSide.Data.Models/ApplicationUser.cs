@@ -3,6 +3,7 @@ namespace SparkSide.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
     using SparkSide.Data.Common.Models;
 
@@ -23,8 +24,20 @@ namespace SparkSide.Data.Models
             this.SiteAlerts = new HashSet<SiteAlert>();
         }
 
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z.\-]+$", ErrorMessage = "Only  '.' and '-' special characters are allowed.")]
+        public string Username { get; set; }
+
+        public string ProfilePictureLink { get; set; }
+
+        [MaxLength(500)]
+        public string Description { get; set; }
+
+        [MaxLength(25)]
         public string FirstName { get; set; }
 
+        [MaxLength(25)]
         public string LastName { get; set; }
 
         public DateTime CreatedOn { get; set; }

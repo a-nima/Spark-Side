@@ -70,6 +70,10 @@
                 .WithOne(e => e.Followed)
                 .HasForeignKey(e => e.FollowedId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasIndex(e => e.Username)
+                    .IsUnique();
         }
     }
 }
