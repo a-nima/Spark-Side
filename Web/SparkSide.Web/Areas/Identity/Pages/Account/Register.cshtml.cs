@@ -49,8 +49,9 @@ namespace SparkSide.Web.Areas.Identity.Pages.Account
             //TODO: Add unique validation
             [Required]
             [MaxLength(254)]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
+            [RegularExpression(@"^[a-zA-Z.\-]+$", ErrorMessage = "Only  '.' and '-' special characters are allowed.")]
+            [Display(Name = "Login Name")]
+            public string LoginName { get; set; }
 
             [Required]
             [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
@@ -93,11 +94,11 @@ namespace SparkSide.Web.Areas.Identity.Pages.Account
             {
                 var user = new ApplicationUser
                 {
-                    UserName = Input.Email,
+                    UserName = Input.LoginName,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    UserName = Input.UserName
+                    LoginName = Input.LoginName,
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

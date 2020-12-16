@@ -27,7 +27,7 @@ namespace SparkSide.Data.Models
         [Required]
         [MaxLength(50)]
         [RegularExpression(@"^[a-zA-Z.\-]+$", ErrorMessage = "Only  '.' and '-' special characters are allowed.")]
-        public string Username { get; set; }
+        public string LoginName { get; set; }
 
         public string ProfilePictureLink { get; set; }
 

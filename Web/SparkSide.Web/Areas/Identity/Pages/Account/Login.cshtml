@@ -13,9 +13,9 @@
         <div id="register" class="col s12">
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label class="mdl-textfield__label" asp-for="Input.Email">Email</label>
-                    <input class="mdl-textfield__input" asp-for="Input.Email" type="email">
-                    <span class="textfield__error" asp-validation-for="Input.Email"></span>
+                    <label class="mdl-textfield__label" asp-for="Input.LoginName">LoginName</label>
+                    <input class="mdl-textfield__input" asp-for="Input.LoginName" type="text">
+                    <span class="textfield__error" asp-validation-for="Input.LoginName"></span>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <label class="mdl-textfield__label" asp-for="Input.Password">Password</label>

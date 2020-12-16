@@ -1,18 +1,33 @@
 ﻿namespace SparkSide.Web.Controllers
 {
     using System.Diagnostics;
-
     using SparkSide.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using SparkSide.Web.ViewModels.Home;
+    using SparkSide.Services.Data.Contracts;
+    using SparkSide.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using System.Threading.Tasks;
+    using SparkSide.Services.Data.Models;
 
     public class HomeController : BaseController
     {
+        private readonly IUsersService usersService;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public HomeController(
+            IUsersService usersService,
+            UserManager<ApplicationUser> userManager)
+        {
+            this.usersService = usersService;
+            this.userManager = userManager;
+        }
+
         public IActionResult Index()
         {
-            if (User?.Identity != null && User.Identity.IsAuthenticated)
+            if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
             {
                 return this.RedirectToAction("Dashboard", "Home");
             }
@@ -33,10 +48,12 @@
         }
 
         [Authorize]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
-
-            return this.View(new DashboardViewModel());
+            DashboardViewModel model = new DashboardViewModel();
+            ApplicationUser currentUser = await this.userManager.GetUserAsync(this.User);
+            model.User = new UserDTO(currentUser);
+            return this.View(model);
         }
     }
 }

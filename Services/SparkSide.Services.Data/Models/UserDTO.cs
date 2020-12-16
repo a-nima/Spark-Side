@@ -1,12 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SparkSide.Services.Data.Models
+﻿namespace SparkSide.Services.Data.Models
 {
+    using SparkSide.Data.Models;
+
     public class UserDTO
     {
-        public string Username { get; set; }
+        public UserDTO(ApplicationUser user)
+        {
+            this.Id = user.Id;
+            this.LoginName = user.LoginName;
+            this.Email = user.Email;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.ProfileDescription = user.Description ?? string.Empty;
+            this.ProfilePictureLink = user.ProfilePictureLink ?? string.Empty;
+            this.FollowersCount = user.FollowedByUsers.Count;
+            this.FollowingCount = user.FollowedUsers.Count;
+        }
+
+        public string Id { get; set; }
+
+        public string LoginName { get; set; }
+
+        public string Email { get; set; }
 
         public string FirstName { get; set; }
 
@@ -15,10 +30,6 @@ namespace SparkSide.Services.Data.Models
         public int FollowersCount { get; set; }
 
         public int FollowingCount { get; set; }
-
-        public bool IsCurrentUser { get; set; }
-
-        public bool IsFollowing { get; set; }
 
         public string ProfilePictureLink { get; set; }
 

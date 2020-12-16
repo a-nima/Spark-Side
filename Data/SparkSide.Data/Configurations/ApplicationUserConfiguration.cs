@@ -72,7 +72,7 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             appUser
-                .HasIndex(e => e.Username)
+                .HasIndex(e => e.LoginName)
                     .IsUnique();
         }
     }

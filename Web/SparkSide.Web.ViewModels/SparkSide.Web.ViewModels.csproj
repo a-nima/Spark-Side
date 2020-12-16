@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SparkSide.Data.Models\SparkSide.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Services\SparkSide.Services.Data\SparkSide.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\SparkSide.Services.Mapping\SparkSide.Services.Mapping.csproj" />
   </ItemGroup>
 

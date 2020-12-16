@@ -2,27 +2,10 @@
 
 namespace SparkSide.Data.Migrations
 {
-    public partial class AddUsernameAndConstraintsToAppUSer : Migration
+    public partial class UpdateApplicationUserModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "UserName",
-                table: "AspNetUsers",
-                newName: "Username");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Username",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(256)",
-                oldMaxLength: 256,
-                oldNullable: true);
-
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",
                 table: "AspNetUsers",
@@ -51,29 +34,30 @@ namespace SparkSide.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
+                name: "LoginName",
+                table: "AspNetUsers",
+                type: "nvarchar(50)",
+                maxLength: 50,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
                 name: "ProfilePictureLink",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "UserName",
-                table: "AspNetUsers",
-                type: "nvarchar(256)",
-                maxLength: 256,
-                nullable: true);
-
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Username",
+                name: "IX_AspNetUsers_LoginName",
                 table: "AspNetUsers",
-                column: "Username",
+                column: "LoginName",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_Username",
+                name: "IX_AspNetUsers_LoginName",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
@@ -81,27 +65,12 @@ namespace SparkSide.Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "ProfilePictureLink",
+                name: "LoginName",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "UserName",
+                name: "ProfilePictureLink",
                 table: "AspNetUsers");
-
-            migrationBuilder.RenameColumn(
-                name: "Username",
-                table: "AspNetUsers",
-                newName: "UserName");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "AspNetUsers",
-                type: "nvarchar(256)",
-                maxLength: 256,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
 
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",

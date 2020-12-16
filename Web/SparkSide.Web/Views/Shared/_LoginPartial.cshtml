@@ -22,7 +22,7 @@
         </div>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
             for="user">
-            <li class="mdl-menu__item">My Profile</li>
+            <li class="mdl-menu__item"><a class="mdl-navigation__link custom-nav-link" asp-controller="Users" asp-action="Index" asp-route-id="@this.User.Identity.Name">My Profile</a></li>
             <li class="mdl-menu__item">Settings</li>
         </ul>
         <div class="mdl-navigation__link custom-nav-link">

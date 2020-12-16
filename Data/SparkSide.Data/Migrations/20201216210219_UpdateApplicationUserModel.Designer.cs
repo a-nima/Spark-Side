@@ -10,8 +10,8 @@ using SparkSide.Data;
 namespace SparkSide.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201216194032_AddUsernameAndConstraintsToAppUSer")]
-    partial class AddUsernameAndConstraintsToAppUSer
+    [Migration("20201216210219_UpdateApplicationUserModel")]
+    partial class UpdateApplicationUserModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -250,6 +250,11 @@ namespace SparkSide.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("LoginName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -283,16 +288,14 @@ namespace SparkSide.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AchievementId");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("LoginName")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -301,9 +304,6 @@ namespace SparkSide.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
 
                     b.ToTable("AspNetUsers");
                 });

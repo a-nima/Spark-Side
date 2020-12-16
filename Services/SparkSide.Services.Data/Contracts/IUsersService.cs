@@ -7,14 +7,11 @@ namespace SparkSide.Services.Data.Contracts
 {
     public interface IUsersService
     {
-        UserDTO GetByUsername(string username)
-        {
+        UserDTO GetByLoginName(string username);
 
-        }
+        void FollowAsync(string currentUserId, string followedUserId);
 
-        UserDTO GetById(string id)
-        {
+        bool IsFollowing(string currentUserId, string otherUserId);
 
-        }
     }
 }

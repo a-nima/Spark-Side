@@ -11,8 +11,9 @@
     public class UsersController : Controller
     {
         [Authorize]
-        public IActionResult Profile(int id)
+        public IActionResult Index(string id)
         {
+
 
             return View();
         }
