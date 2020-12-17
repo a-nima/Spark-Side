@@ -46,5 +46,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\NewFolder\" />
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 </Project>

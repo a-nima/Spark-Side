@@ -1,0 +1,25 @@
+﻿@model SparkSide.Services.Data.Models.UserDTO
+
+<script type="text/javascript">
+    $(() => {
+        var followButton = $("#btnFollow");
+        followButton.click(() => {
+            followButton.attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("Follow", "UserActions")',
+               // data: { userId: "@Model.Id" },
+                success: function () {
+                    // alert("Data has been added successfully.");
+                    followButton.val("Followed");
+                },
+                error: function () {
+                    alert("Error while following user.");
+                    followButton.attr("disabled", false);
+                }
+            });
+            return false;
+        });
+    });
+
+</script>  

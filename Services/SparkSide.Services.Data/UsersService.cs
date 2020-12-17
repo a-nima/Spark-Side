@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
     using SparkSide.Data.Common.Repositories;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
@@ -18,6 +19,7 @@
         public UsersService(IDeletableEntityRepository<ApplicationUser> usersRepository, IDeletableEntityRepository<UserFollow> userFollowRepository)
         {
             this.usersRepository = usersRepository;
+            this.userFollowRepository = userFollowRepository;
         }
 
         public UserDTO GetById(string id)
@@ -46,7 +48,7 @@
                 .Any();
         }
 
-        public async void FollowAsync(string currentUserId, string followedUserId)
+        public async Task FollowAsync(string currentUserId, string followedUserId)
         {
             if (!this.IsFollowing(currentUserId, followedUserId))
             {

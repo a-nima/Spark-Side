@@ -148,3 +148,38 @@ h3 {
 .checkbox {
     display: inline-block;
 }
+
+.mdl-menu__item .custom-nav-link {
+    color: rgba(0,0,0,.87);
+    padding: 0px !important;
+}
+
+/**
+    User Profile
+*/
+
+.user-profile {
+    width: 100%;
+    min-height: 650px;
+    min-width: 650px;
+}
+
+    .user-profile .mdl-grid {
+        width: 100%
+    }
+
+    .user-profile .profile-picture-container {
+        width: 260px;
+        height: 260px;
+        overflow: hidden;
+        margin: 10px;
+    }
+
+    .user-profile .profile-follow-button {
+        float: right;
+        padding: 0 18px;
+    }
+
+    .user-profile .profile-picture-container > img {
+        width: inherit;
+    }

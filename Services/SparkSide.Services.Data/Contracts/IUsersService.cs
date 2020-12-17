@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SparkSide.Services.Data.Contracts
 {
@@ -9,7 +10,7 @@ namespace SparkSide.Services.Data.Contracts
     {
         UserDTO GetByLoginName(string username);
 
-        void FollowAsync(string currentUserId, string followedUserId);
+        Task FollowAsync(string currentUserId, string followedUserId);
 
         bool IsFollowing(string currentUserId, string otherUserId);
 
