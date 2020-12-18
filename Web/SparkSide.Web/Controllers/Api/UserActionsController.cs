@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -13,8 +13,9 @@
     using SparkSide.Services.Data.Contracts;
     using SparkSide.Web.ViewModels.Users;
 
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserActionsController : ControllerBase
     {
         private readonly IUsersService usersService;
@@ -63,6 +64,7 @@
             }
 
             await this.usersService.UnfollowAsync(currentUserId, model.UserId);
+
             return this.Ok();
         }
     }
