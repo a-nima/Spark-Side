@@ -14,5 +14,6 @@ namespace SparkSide.Services.Data.Contracts
 
         bool IsFollowing(string currentUserId, string otherUserId);
 
+        Task UnfollowAsync(string currentUserId, string otherUserId);
     }
 }

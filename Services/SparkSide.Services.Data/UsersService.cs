@@ -63,5 +63,17 @@
 
             // TODO: throw error if following already
         }
+
+        public async Task UnfollowAsync(string currentUserId, string otherUserId)
+        {
+            var followEntity = this.userFollowRepository
+                .All()
+                .Where(u => u.FollowerId == currentUserId && u.FollowedId == otherUserId)
+                .FirstOrDefault();
+
+            this.userFollowRepository.HardDelete(followEntity);
+
+            await this.userFollowRepository.SaveChangesAsync();
+        }
     }
 }

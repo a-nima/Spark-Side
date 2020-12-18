@@ -5,6 +5,23 @@
 }
 
 <div class="mdl-card user-profile mdl-shadow--2dp">
+    <div class="profile-follow-button">
+        @{
+            
+            if (Model.IsFollowing)
+            {
+                <button id="btnUnfollow" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    Unfollow
+                </button>
+            }
+            else if (!Model.IsCurrentUser)
+            {
+                <button id="btnFollow" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    Follow
+                </button>
+            }
+        }
+    </div>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
             <div class="profile-picture-container">
@@ -12,22 +29,7 @@
             </div>
         </div>
         <div class="mdl-cell mdl-cell--8-col">
-            <div class="profile-follow-button">
-                @{
-                    if (Model.IsFollowing)
-                    {
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" disabled>
-                            Followed
-                        </button>
-                    }
-                    else if (!Model.IsCurrentUser)
-                    {
-                        <button  id="btnFollow" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            Follow
-                        </button>
-                    }
-                }
-            </div>
+
             <div class="profile-header"></div>
         </div>
     </div>

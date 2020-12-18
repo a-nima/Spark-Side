@@ -176,9 +176,14 @@ h3 {
     }
 
     .user-profile .profile-follow-button {
-        float: right;
-        padding: 0 18px;
+        width: 100%;
+        position: absolute;
     }
+
+        .profile-follow-button button {
+            margin: 18px;
+            float: right;
+        }
 
     .user-profile .profile-picture-container > img {
         width: inherit;

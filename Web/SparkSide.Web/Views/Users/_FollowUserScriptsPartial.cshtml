@@ -6,13 +6,6 @@
         var followButton = $("#btnFollow");
         followButton.click(() => {
             followButton.attr("disabled", true);
-            @*let requestData = {
-                data: {
-                    userId: "@Model.Id"
-                },
-                ,
-            };*@
-
             $.ajax({
                 method: "POST",
                 url: '@Url.Action("Follow", "UserActions")',
@@ -21,12 +14,32 @@
                 }),
                 contentType: "application/json",
                 success: function () {
-                    alert("User successfully followed");
                     followButton.text("Followed");
                 },
                 error: function () {
                     alert("Error while following user.");
                     followButton.attr("disabled", false);
+                }
+            });
+            return false;
+        });
+
+        var unfollowButton = $("#btnUnfollow");
+        unfollowButton.click(() => {
+            unfollowButton.attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("Unfollow", "UserActions")',
+                data: JSON.stringify({
+                    'UserId': '@Model.Id',
+                }),
+                contentType: "application/json",
+                success: function () {
+                    unfollowButton.text("Unfollowed");
+                },
+                error: function () {
+                    alert("Error while following user.");
+                    unfollowButton.attr("disabled", false);
                 }
             });
             return false;

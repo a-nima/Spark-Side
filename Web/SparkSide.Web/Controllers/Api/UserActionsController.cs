@@ -46,5 +46,24 @@
             await this.usersService.FollowAsync(currentUserId, model.UserId);
             return this.Ok();
         }
+
+        [HttpPost]
+        [Route(nameof(Unfollow))]
+        public async Task<IActionResult> Unfollow([FromBody] UserFollowInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == model.UserId)
+            {
+                return this.BadRequest("You cannot unfollow yourself.");
+            }
+
+            await this.usersService.UnfollowAsync(currentUserId, model.UserId);
+            return this.Ok();
+        }
     }
 }
