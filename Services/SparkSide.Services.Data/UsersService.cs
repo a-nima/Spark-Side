@@ -15,7 +15,6 @@
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<UserFollow> userFollowRepository;
 
-
         public UsersService(IDeletableEntityRepository<ApplicationUser> usersRepository, IDeletableEntityRepository<UserFollow> userFollowRepository)
         {
             this.usersRepository = usersRepository;
@@ -59,6 +58,7 @@
                 };
 
                 await this.userFollowRepository.AddAsync(entity);
+                await this.userFollowRepository.SaveChangesAsync();
             }
 
             // TODO: throw error if following already

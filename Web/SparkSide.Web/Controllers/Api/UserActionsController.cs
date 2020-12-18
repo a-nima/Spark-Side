@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
+    using SparkSide.Web.ViewModels.Users;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -29,15 +30,20 @@
 
         [HttpPost]
         [Route(nameof(Follow))]
-        public async Task<IActionResult> Follow()
+        public async Task<IActionResult> Follow([FromBody] UserFollowInputModel model)
         {
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //if (currentUserId == userId)
-            //{
-            //    return this.BadRequest("You cannot follow yourself.");
-            //}
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
 
-            //await this.usersService.FollowAsync(currentUserId, userId);
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId == model.UserId)
+            {
+                return this.BadRequest("You cannot follow yourself.");
+            }
+
+            await this.usersService.FollowAsync(currentUserId, model.UserId);
             return this.Ok();
         }
     }
