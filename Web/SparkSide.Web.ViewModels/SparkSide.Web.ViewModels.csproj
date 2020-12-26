@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\Services\SparkSide.Services.Mapping\SparkSide.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Explore\" />
+  </ItemGroup>
+
 </Project>

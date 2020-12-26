@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SparkSide.Common;
 using SparkSide.Data.Models;
 
 namespace SparkSide.Web.Areas.Identity.Pages.Account
@@ -46,6 +47,9 @@ namespace SparkSide.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+
             //TODO: Add unique validation
             [Required]
             [MaxLength(254)]
@@ -101,6 +105,12 @@ namespace SparkSide.Web.Areas.Identity.Pages.Account
                     LoginName = Input.LoginName,
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                if (Input.Role == GlobalConstants.TrainerRoleName)
+                {
+                    await _userManager.AddToRolesAsync(user, new List<string>() { GlobalConstants.TrainerRoleName });
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

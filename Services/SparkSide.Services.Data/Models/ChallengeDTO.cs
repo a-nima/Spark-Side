@@ -20,6 +20,7 @@
             this.DurationDays = challenge.DurationDays;
             this.Author = new UserDTO(challenge.Author);
             this.CreatedOn = challenge.CreatedOn;
+            this.PictureLink = challenge.PictureLink;
         }
 
         public int Id { get; set; }
@@ -29,6 +30,8 @@
         public string Description { get; set; }
 
         public int DurationDays { get; set; }
+
+        public string PictureLink { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

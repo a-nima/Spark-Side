@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
+    using Microsoft.EntityFrameworkCore;
     using SparkSide.Data.Common.Repositories;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
@@ -23,9 +23,10 @@
         {
             return this.challengesRepository
                 .All()
+                .Include(c => c.Author)
                 .Where(c => c.IsPublished)
-                .Select(c => new ChallengeDTO(c))
                 .OrderByDescending(c => c.CreatedOn)
+                .Select(c => new ChallengeDTO(c))
                 .ToList();
         }
 
@@ -33,6 +34,7 @@
         {
             return this.challengesRepository
                 .All()
+                .Include(c => c.Author)
                 .Where(c => c.AuthorId == userId)
                 .Select(c => new ChallengeDTO(c))
                 .ToList();
@@ -42,6 +44,7 @@
         {
             return this.challengesRepository
                 .All()
+                .Include(c => c.Author)
                 .Where(c => c.UsersWithActiveChallenge.Any(u => u.UserId == userId))
                 .Select(c => new ChallengeDTO(c))
                 .ToList();
@@ -51,6 +54,7 @@
         {
             return this.challengesRepository
                .All()
+               .Include(c => c.Author)
                .Where(c => c.UsersWithFavouriteChallenge.Any(u => u.UserId == userId))
                .Select(c => new ChallengeDTO(c))
                .ToList();

@@ -22,6 +22,7 @@
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<Setting> Settings { get; set; }

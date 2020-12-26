@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using SparkSide.Data.Common.Repositories;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
@@ -35,6 +36,8 @@
             return this.usersRepository
                .All()
                .Where(a => a.LoginName.ToLower() == loginName.ToLower())
+               .Include(e => e.FollowedByUsers)
+               .Include(e => e.FollowedUsers)
                .Select(a => new UserDTO(a))
                .FirstOrDefault();
         }

@@ -32,6 +32,8 @@
         [Required]
         public int DurationDays { get; set; }
 
+        public string PictureLink { get; set; }
+
         public bool IsPublished { get; set; }
 
         public virtual ICollection<ChallengeTag> Tags { get; set; }

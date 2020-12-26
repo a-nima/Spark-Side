@@ -1,4 +1,5 @@
-﻿@model SparkSide.Web.ViewModels.Users.UserProfileViewModel
+﻿@using SparkSide.Common
+@model SparkSide.Web.ViewModels.Users.UserProfileViewModel
 
 @{
     this.ViewData["Title"] = Model.User.FirstName + " " + Model.User.LastName;
@@ -7,7 +8,7 @@
 <div class="mdl-card user-profile mdl-shadow--2dp">
     <div class="profile-follow-button">
         @{
-            
+
             if (Model.IsFollowing)
             {
                 <button id="btnUnfollow" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
@@ -23,14 +24,30 @@
         }
     </div>
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--3-col profile-col">
             <div class="profile-picture-container">
                 <img src="@Model.User.ProfilePictureLink" />
             </div>
+            <div class="profile-follows">
+                <span><strong>@Model.User.FollowingCount</strong> following</span>
+                <span><strong>@Model.User.FollowersCount</strong> followers</span>
+            </div>
         </div>
-        <div class="mdl-cell mdl-cell--8-col">
-
-            <div class="profile-header"></div>
+        <div class="mdl-cell mdl-cell--6-col profile-info-container">
+            <div class="profile-header">
+                <span><strong>@Model.User.FirstName @Model.User.LastName</strong></span>
+                @if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
+                {
+                    <span class="profile-role">Trainer</span>
+                }
+                else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <span class="profile-role">Admin</span>
+                }
+            </div>
+            <div class="profile-description">
+                <p>@Model.User.ProfileDescription</p>
+            </div>
         </div>
     </div>
 </div>

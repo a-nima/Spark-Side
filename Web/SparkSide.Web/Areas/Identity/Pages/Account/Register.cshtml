@@ -1,4 +1,5 @@
 @page
+@using SparkSide.Common
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -10,7 +11,15 @@
             <h3>@ViewData["Title"]</h3>
         </div>
         <div id="register" class="col s12">
-            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" >
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                    <input type="radio"  id="option-1" class="mdl-radio__button" asp-for="Input.Role" value="User" checked>
+                    <span class="mdl-radio__label">User</span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                    <input type="radio" id="option-2" class="mdl-radio__button" asp-for="Input.Role" value="@GlobalConstants.TrainerRoleName">
+                    <span class="mdl-radio__label">@GlobalConstants.TrainerRoleName</span>
+                </label>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <label class="mdl-textfield__label" asp-for="Input.LoginName">Login Name</label>
                     <input class="mdl-textfield__input" asp-for="Input.LoginName" type="text">
