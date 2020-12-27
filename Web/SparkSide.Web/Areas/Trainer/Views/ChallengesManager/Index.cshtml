@@ -1,0 +1,74 @@
+﻿@model IEnumerable<SparkSide.Services.Data.Models.ChallengeDTO>
+
+
+@{
+    this.ViewData["Title"] = "My Challenges";
+}
+
+<div>
+    <div class="page-title">
+        <h3>@ViewData["Title"]</h3>
+    </div>
+</div>
+
+<div class="content-container">
+    <div class="create-button-container">
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+           asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Create">
+            Create
+        </a>
+    </div>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Title</th>
+                <th class="mdl-data-table__cell--non-numeric">Comments</th>
+                <th class="mdl-data-table__cell--non-numeric">Saved</th>
+                <th class="mdl-data-table__cell--non-numeric">Started</th>
+                <th class="mdl-data-table__cell--non-numeric">Created On</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var challenge in Model)
+            {
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">@challenge.Title</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="mdl-data-table__cell--non-numeric">@challenge.CreatedOn</td>
+                    <td>
+                        @if (!challenge.IsPublished)
+                        {
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                               asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Publish" asp-route-id="@challenge.Id">
+                                Publish
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (!challenge.IsPublished)
+                        {
+                            <a class="mdl-button mdl-js-button mdl-button--primary"
+                               asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Edit" asp-route-id="@challenge.Id">
+                                Edit
+                            </a>
+                        }
+                        <span>|</span>
+                        <a class="mdl-button mdl-js-button mdl-button--primary"
+                           asp-area="" asp-controller="Challenges" asp-action="Details" asp-route-id="@challenge.Id">
+                            Details
+                        </a>
+                        <span>|</span>
+                        <a class="mdl-button mdl-js-button mdl-button--primary"
+                           asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Delete" asp-route-id="@challenge.Id">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

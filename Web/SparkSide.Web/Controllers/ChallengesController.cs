@@ -47,30 +47,5 @@
         {
             return this.View();
         }
-
-        [HttpGet]
-        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
-        public IActionResult Create()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
-        public IActionResult Create([FromBody] CreateChallengeInputModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest();
-            }
-
-            return this.RedirectToAction("MyChallenges", "Challenges");
-        }
-
-        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
-        public IActionResult MyChallenges()
-        {
-            return this.View();
-        }
     }
 }

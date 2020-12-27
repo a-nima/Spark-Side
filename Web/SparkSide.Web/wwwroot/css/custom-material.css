@@ -222,21 +222,21 @@ h3 {
     margin-top: 5px;
 }
 
-.card-results-container .mdl-card {
-    margin: 5px;
-    width: 32%;
-    max-width: 320px;
-    min-height: 320px;
-    display: inline-flex;
-}
-
-    .card-results-container .mdl-card .mdl-card__supporting-text {
-        height: 50px;
+    .card-results-container .mdl-card {
+        margin: 5px;
+        width: 32%;
+        max-width: 320px;
+        min-height: 320px;
+        display: inline-flex;
     }
 
-    .card-results-container .mdl-card .mdl-card__title {
-        background-size: 100% auto !important;
-    }
+        .card-results-container .mdl-card .mdl-card__supporting-text {
+            height: 50px;
+        }
+
+        .card-results-container .mdl-card .mdl-card__title {
+            background-size: 100% auto !important;
+        }
 
 .mdl-card__title-text {
     color: #ffff !important;
@@ -248,4 +248,18 @@ h3 {
 
 .float-right {
     float: right;
+}
+
+
+.create-button-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*
+    Page 
+*/
+
+.content-container {
+    margin-top: 5px;
 }

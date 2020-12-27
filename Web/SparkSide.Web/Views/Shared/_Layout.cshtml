@@ -43,7 +43,7 @@
                     <a class="mdl-navigation__link" asp-controller="Home" asp-action="Index"><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
                     @if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
                     {
-                        <a class="mdl-navigation__link" asp-controller="Challenges" asp-action="MyChallenges"><i class="material-icons menu-icon">favorite_border</i>My Challenges</a>
+                        <a class="mdl-navigation__link" asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Index"><i class="material-icons menu-icon">favorite_border</i>My Challenges</a>
                     }
                     <a class="mdl-navigation__link" asp-controller="Challenges" asp-action="Followed"><i class="material-icons menu-icon">star_border</i>Followed Challenges</a>
                     <a class="mdl-navigation__link" asp-controller="Challenges" asp-action="Saved"><i class="material-icons menu-icon">bookmark_border</i>Saved Challenges</a>
