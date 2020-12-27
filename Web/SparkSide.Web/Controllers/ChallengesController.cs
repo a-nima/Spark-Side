@@ -10,6 +10,7 @@
     using SparkSide.Common;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
+    using SparkSide.Services.Data.Models;
     using SparkSide.Web.ViewModels.Challenges;
 
     public class ChallengesController : Controller
@@ -43,9 +44,16 @@
             return this.View();
         }
 
-        public IActionResult Details([FromQuery] string id)
+        public async Task<IActionResult> Details(int id)
         {
-            return this.View();
+            ChallengeDTO challenge = await this.challengesService.GetById(id);
+
+            if (challenge == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(challenge);
         }
     }
 }

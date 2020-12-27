@@ -1,9 +1,18 @@
-﻿@{
-    this.ViewData["Title"] = "Challenge Title";
+﻿@model SparkSide.Services.Data.Models.ChallengeDTO
+ 
+
+@{
+    this.ViewData["Title"] = Model.Title;
 }
 
 <div>
     <div class="page-title">
-        <h3>@ViewData["Title"]</h3>
+        <h3>Details</h3>
     </div>
 </div>
+
+<center>
+    <div class="mdl-card content-container challenge-container mdl-shadow--2dp ">
+
+    </div>
+</center>

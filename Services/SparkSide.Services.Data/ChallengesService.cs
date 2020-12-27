@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SparkSide.Data.Common.Repositories;
     using SparkSide.Data.Models;
@@ -58,6 +59,16 @@
                .Where(c => c.UsersWithFavouriteChallenge.Any(u => u.UserId == userId))
                .Select(c => new ChallengeDTO(c))
                .ToList();
+        }
+
+        public Task<ChallengeDTO> GetById(int id)
+        {
+            return this.challengesRepository
+                .All()
+                .Include(c => c.Author)
+                .Where(c => c.Id == id)
+                .Select(c => new ChallengeDTO(c))
+                .FirstOrDefaultAsync();
         }
     }
 }

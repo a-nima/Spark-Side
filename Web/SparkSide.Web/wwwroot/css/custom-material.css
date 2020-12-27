@@ -261,5 +261,14 @@ h3 {
 */
 
 .content-container {
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+
+/**
+    Challenges
+*/
+
+.challenge-container {
+    width: 100%
 }
