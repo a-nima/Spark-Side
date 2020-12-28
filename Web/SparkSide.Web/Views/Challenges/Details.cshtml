@@ -66,13 +66,17 @@
                 </span>
             }
         </div>
-        <div>
-            <div class="border-bottom">
-                <h4>Comments (3)</h4>
+        @if (Model.Challenge.IsPublished)
+        {
+            <div>
+                <div class="border-bottom">
+                    <h4>Comments (3)</h4>
+                </div>
+                <br />
+                @*comments*@
             </div>
-            <br />
-            @*comments*@
-        </div>
+        }
+        <br/>
     </div>
 </center>
 

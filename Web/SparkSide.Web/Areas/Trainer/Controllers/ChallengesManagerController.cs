@@ -69,22 +69,37 @@
             }
         }
 
-        // GET: ChallengesManagerController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            // edit challenge if not published
-            // else redirect
-            return View();
+            ChallengeDTO challenge = await this.challengesService.GetByIdAsync(id);
+
+            if (challenge != null && !challenge.IsPublished)
+            {
+                EditChallengeInputModel inputModel = new EditChallengeInputModel(challenge);
+
+                return this.View(inputModel);
+            }
+            else
+            {
+                return this.NotFound();
+            }
         }
 
-        // POST: ChallengesManagerController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, EditChallengeInputModel collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                ChallengeDTO challenge = await this.challengesService.GetByIdAsync(id);
+
+                if (challenge != null && !challenge.IsPublished)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return this.NotFound();
+                }
             }
             catch
             {

@@ -6,14 +6,24 @@
     using System.Text;
 
     using Microsoft.AspNetCore.Http;
+    using SparkSide.Services.Data.Models;
 
     public class CreateChallengeInputModel
     {
+        public CreateChallengeInputModel(ChallengeDTO challenge)
+        {
+            this.Title = challenge.Title;
+            this.Description = challenge.Description;
+            this.DurationDays = challenge.DurationDays;
+            this.Tags = challenge.Tags;
+            this.Tasks = new HashSet<ChallengeTaskInputModel>();
+        }
         public CreateChallengeInputModel()
         {
             this.Tags = new HashSet<string>();
             this.Tasks = new HashSet<ChallengeTaskInputModel>();
         }
+
 
         [Required]
         [MaxLength(120)]
