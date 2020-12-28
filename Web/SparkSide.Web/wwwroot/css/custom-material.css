@@ -267,9 +267,50 @@ h3 {
 .form-button {
     display: inline-block;
 }
+
+.border-bottom {
+    border-bottom: solid 1px #757575;
+}
+
 /**
     Challenges
 */
 .challenge-container {
-    width: 100%
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.author-container {
+    margin-left: 20px;
+}
+
+.info {
+    margin-left: 20px;
+}
+
+.picture-container {
+    width: 25%;
+    display: inline-block;
+}
+
+.challenge-picture {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.challenge-info-container {
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px;
+}
+
+.title-container h3 {
+    display: inline-block;
+}
+
+.action-buttons {
+    display: inline-block;
+    float: right;
 }
