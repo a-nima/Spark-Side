@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
+
     using SparkSide.Services.Data.Models;
+    using SparkSide.Web.ViewModels.Challenges;
 
     public interface IChallengesService
     {
@@ -25,6 +27,9 @@
         bool IsChallengeStarted(string userId, int id);
 
         bool IsChallengeSaved(string userId, int id);
+
         Task AddToSavedAsync(string userId, int challengeId);
+
+        Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string v);
     }
 }

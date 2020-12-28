@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SparkSide.Data.Common\SparkSide.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\SparkSide.Data.Models\SparkSide.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\SparkSide.Web.ViewModels\SparkSide.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\SparkSide.Services.DTOs\SparkSide.Services.DTOs.csproj" />
     <ProjectReference Include="..\SparkSide.Services.Mapping\SparkSide.Services.Mapping.csproj" />
   </ItemGroup>
 

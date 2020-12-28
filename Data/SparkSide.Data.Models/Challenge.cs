@@ -45,6 +45,5 @@
         public virtual ICollection<ChallengeTask> ChallengeTasks { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-
     }
 }

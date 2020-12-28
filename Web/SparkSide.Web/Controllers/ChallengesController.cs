@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,6 @@
     {
         private readonly IChallengesService challengesService;
         private readonly UserManager<ApplicationUser> userManager;
-
 
         public ChallengesController(
             IChallengesService challengesService,
@@ -54,7 +54,7 @@
                 return this.NotFound();
             }
 
-            if(!details.Challenge.IsPublished && details.Challenge.Author.LoginName != this.User.Identity.Name)
+            if (!details.Challenge.IsPublished && details.Challenge.Author.LoginName != this.User.Identity.Name)
             {
                 return this.NotFound();
             }
@@ -63,7 +63,6 @@
 
             details.IsStartButtonDisabled = this.challengesService.IsChallengeStarted(userId, details.Challenge.Id);
             details.IsSaveButtonDisabled = this.challengesService.IsChallengeSaved(userId, details.Challenge.Id);
-
 
             return this.View(details);
         }

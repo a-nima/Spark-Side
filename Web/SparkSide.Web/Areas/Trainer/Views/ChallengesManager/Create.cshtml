@@ -1,0 +1,98 @@
+﻿@model SparkSide.Web.ViewModels.Challenges.CreateChallengeInputModel
+@using System.Collections.Generic
+@{
+    this.ViewData["Title"] = "Create Challenge";
+}
+
+<div>
+    <div class="page-title">
+        <h3>@ViewData["Title"]</h3>
+    </div>
+</div>
+
+<div class="content-container">
+    <div class="mdl-card create-challenge-form mdl-shadow--2dp">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="Title">Title</label>
+                <input class="mdl-textfield__input" asp-for="Title" type="text">
+                <span class="textfield__error" asp-validation-for="Title"></span>
+            </div>
+            <br />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="Description">Description</label>
+                <textarea class="mdl-textfield__input" multiline asp-for="Description"></textarea>
+                <span class="textfield__error" asp-validation-for="Description"></span>
+            </div>
+            <br />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="file" asp-for="Image">
+                <span class="textfield__error" asp-validation-for="Image"></span>
+            </div>
+            <br />
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="tagInput">
+                <label class="mdl-textfield__label" for="sample1">Add Tag...</label>
+                <span id="tagError" style="display: none;" class="textfield__error">Invalid tag.</span>
+            </div>
+            <a id="addTag" onclick="addTag()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                <i class="material-icons">add</i>
+            </a>
+            <div id="tagsContainer"></div>
+            <br />
+            <input id="durationDays" class="mdl-textfield__input" asp-for="DurationDays" hidden type="number">
+            <br />
+            <div class="form-button">
+                <button class="mdl-button--colored mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action">Save</button>
+            </div>
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+               asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Index">Cancel</a>
+            <br />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var tags = [];
+
+        function addTag() {
+            let tagInput = $("#tagInput");
+            let tag = tagInput.val().trim().toLowerCase();
+
+            if (tag.length == 0 || tags.filter(t => t == tag).length > 0) {
+                $('#tagError').show();
+                return;
+            }
+
+            $('#tagError').hide();
+
+            $("#tagsContainer")
+                .append(`
+                        <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                            <span class="mdl-chip__text">${tag}</span>
+                            <input hidden type="text" value="${tag}" name="Tags[${tags.length}]"/>
+                            <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                        </span>`);
+            tags.push(tag);
+            tagInput.val("");
+        }
+
+        function removeTag(tagName) {
+            tags = tags.filter(t => t != tagName);
+            $(".tag-chip-container").remove();
+
+            for (var i = 0; i < tags.length; i++) {
+                let tag = tags[i].trim();
+
+                $("#tagsContainer")
+                    .append(`
+                            <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                                <span class="mdl-chip__text">${tag}</span>
+                                <input hidden type="text" value="${tag}" name="Tags[${i}]"/>
+                                <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                            </span>`);
+            }
+        }
+    </script>
+}

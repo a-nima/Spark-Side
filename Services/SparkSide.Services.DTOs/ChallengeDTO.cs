@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     using SparkSide.Data.Models;
@@ -21,6 +22,7 @@
             this.Author = new UserDTO(challenge.Author);
             this.CreatedOn = challenge.CreatedOn;
             this.PictureLink = challenge.PictureLink;
+            this.Tags = challenge.Tags.Select(t => t.Tag.Title).ToList();
         }
 
         public int Id { get; set; }

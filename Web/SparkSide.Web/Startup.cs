@@ -2,17 +2,6 @@
 {
     using System.Reflection;
 
-    using SparkSide.Data;
-    using SparkSide.Data.Common;
-    using SparkSide.Data.Common.Repositories;
-    using SparkSide.Data.Models;
-    using SparkSide.Data.Repositories;
-    using SparkSide.Data.Seeding;
-    using SparkSide.Services.Data;
-    using SparkSide.Services.Mapping;
-    using SparkSide.Services.Messaging;
-    using SparkSide.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -21,7 +10,17 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SparkSide.Data;
+    using SparkSide.Data.Common;
+    using SparkSide.Data.Common.Repositories;
+    using SparkSide.Data.Models;
+    using SparkSide.Data.Repositories;
+    using SparkSide.Data.Seeding;
+    using SparkSide.Services.Data;
     using SparkSide.Services.Data.Contracts;
+    using SparkSide.Services.Mapping;
+    using SparkSide.Services.Messaging;
+    using SparkSide.Web.ViewModels;
 
     public class Startup
     {
@@ -68,7 +67,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IChallengesService, ChallengesService>();
             services.AddTransient<IUsersService, UsersService>();
-
+            services.AddTransient<ITagsService, TagsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

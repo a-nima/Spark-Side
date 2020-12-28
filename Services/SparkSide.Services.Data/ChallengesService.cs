@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -10,21 +11,26 @@
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
     using SparkSide.Services.Data.Models;
+    using SparkSide.Web.ViewModels.Challenges;
 
     public class ChallengesService : IChallengesService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
+
         private readonly IDeletableEntityRepository<Challenge> challengesRepository;
         private readonly IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository;
         private readonly IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository;
-
-
-        public ChallengesService(IDeletableEntityRepository<Challenge> challengesRepository,
+        private readonly ITagsService tagsService;
+        public ChallengesService(
+            IDeletableEntityRepository<Challenge> challengesRepository,
             IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository,
-            IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository)
+            IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository,
+            ITagsService tagsService)
         {
             this.challengesRepository = challengesRepository;
             this.savedChallengesRepository = savedChallengesRepository;
             this.startedChallengesRepository = startedChallengesRepository;
+            this.tagsService = tagsService;
         }
 
         public ICollection<ChallengeDTO> GetAll()
@@ -73,6 +79,8 @@
             return this.challengesRepository
                 .All()
                 .Include(c => c.Author)
+                .Include(c => c.Tags)
+                    .ThenInclude(t => t.Tag)
                 .Where(c => c.Id == id)
                 .Select(c => new ChallengeDTO(c))
                 .FirstOrDefaultAsync();
@@ -139,10 +147,56 @@
             if (challenge == null)
             {
                 throw new ArgumentException("Can't find challenge with id " + challengeId);
-            };
+            }
 
             challenge.UsersWithFavouriteChallenge.Add(entity);
             await this.savedChallengesRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string path)
+        {
+            //TODO: Add days count
+            Challenge challenge = new Challenge
+            {
+                Title = input.Title,
+                Description = input.Description,
+                AuthorId = userId,
+                IsPublished = false,
+                DurationDays = input.DurationDays,
+            };
+
+            await this.challengesRepository.AddAsync(challenge);
+            await this.challengesRepository.SaveChangesAsync();
+
+            for (int i = 0; i < input.Tags.Count; i++)
+            {
+                await this.tagsService.AddTag(challenge.Id, input.Tags.ElementAt(i));
+            }
+
+            if (input.Image != null)
+            {
+
+                // /wwwroot/images/recipes/jhdsi-343g3h453-=g34g.jpg
+                Directory.CreateDirectory($"{path}/challenges/");
+
+                var extension = Path.GetExtension(input.Image.FileName).TrimStart('.');
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var physicalPath = $"{path}/challenges/{challenge.Id}.{extension}";
+
+                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await input.Image.CopyToAsync(fileStream);
+                }
+
+                challenge.PictureLink = physicalPath;
+                await this.challengesRepository.SaveChangesAsync();
+            }
+
+            return challenge.Id;
         }
     }
 }

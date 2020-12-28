@@ -46,7 +46,7 @@
         </div>
         <div class="info">
             <div class="picture-container">
-                <img class="challenge-picture" src="@Model.Challenge.PictureLink" />
+                <img class="challenge-picture" asp-append-version="true" src="@Model.Challenge.PictureLink" />
             </div>
             <div class="challenge-info-container">
                 <div>
@@ -57,6 +57,14 @@
                     <p>@Model.Challenge.Description</p>
                 </div>
             </div>
+        </div>
+        <div>
+            @foreach (var tag in Model.Challenge.Tags)
+            {
+                <span class="tag-chip-container mdl-chip">
+                    <span class="mdl-chip__text">@tag</span>
+                </span>
+            }
         </div>
         <div>
             <div class="border-bottom">
