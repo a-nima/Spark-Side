@@ -16,6 +16,10 @@
 
         ICollection<ChallengeDTO> GetUserCreatedChallenges(string userId);
 
-        Task<ChallengeDTO> GetById(int id);
+        Task<ChallengeDTO> GetByIdAsync(int id);
+
+        Task DeleteByIdAsync(int id);
+
+        Task PublishAsync(int id);
     }
 }

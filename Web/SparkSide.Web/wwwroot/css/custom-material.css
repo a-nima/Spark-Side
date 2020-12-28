@@ -264,11 +264,12 @@ h3 {
     margin-top: 10px;
 }
 
-
+.form-button {
+    display: inline-block;
+}
 /**
     Challenges
 */
-
 .challenge-container {
     width: 100%
 }

@@ -61,7 +61,7 @@
                .ToList();
         }
 
-        public Task<ChallengeDTO> GetById(int id)
+        public Task<ChallengeDTO> GetByIdAsync(int id)
         {
             return this.challengesRepository
                 .All()
@@ -69,6 +69,40 @@
                 .Where(c => c.Id == id)
                 .Select(c => new ChallengeDTO(c))
                 .FirstOrDefaultAsync();
+        }
+
+        public Task DeleteByIdAsync(int id)
+        {
+            Challenge challenge = this.challengesRepository
+                .All()
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            if (challenge == null)
+            {
+                throw new ArgumentException("No challenge found with id " + id);
+            }
+
+            this.challengesRepository.Delete(challenge);
+
+            return this.challengesRepository.SaveChangesAsync();
+        }
+
+        public Task PublishAsync(int id)
+        {
+            Challenge challenge = this.challengesRepository
+             .All()
+             .Where(c => c.Id == id)
+             .FirstOrDefault();
+
+            if (challenge == null)
+            {
+                throw new ArgumentException("No challenge found with id " + id);
+            }
+
+            challenge.IsPublished = true;
+
+            return this.challengesRepository.SaveChangesAsync();
         }
     }
 }

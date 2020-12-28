@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
@@ -93,25 +93,33 @@
             }
         }
 
-        // GET: ChallengesManagerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-
-            return View();
-        }
-
-        // POST: ChallengesManagerController/Delete/5
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Publish(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                await this.challengesService.PublishAsync(id);
+                return this.RedirectToAction(nameof(this.Index));
             }
             catch
             {
-                return View();
+                return this.NotFound();
+            }
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await this.challengesService.DeleteByIdAsync(id);
+                return this.RedirectToAction(nameof(this.Index));
+            }
+            catch
+            {
+                return this.NotFound();
             }
         }
     }

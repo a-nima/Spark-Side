@@ -46,7 +46,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            ChallengeDTO challenge = await this.challengesService.GetById(id);
+            ChallengeDTO challenge = await this.challengesService.GetByIdAsync(id);
 
             if (challenge == null)
             {
