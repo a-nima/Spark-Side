@@ -14,10 +14,17 @@
     public class ChallengesService : IChallengesService
     {
         private readonly IDeletableEntityRepository<Challenge> challengesRepository;
+        private readonly IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository;
+        private readonly IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository;
 
-        public ChallengesService(IDeletableEntityRepository<Challenge> challengesRepository)
+
+        public ChallengesService(IDeletableEntityRepository<Challenge> challengesRepository,
+            IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository,
+            IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository)
         {
             this.challengesRepository = challengesRepository;
+            this.savedChallengesRepository = savedChallengesRepository;
+            this.startedChallengesRepository = startedChallengesRepository;
         }
 
         public ICollection<ChallengeDTO> GetAll()
@@ -103,6 +110,39 @@
             challenge.IsPublished = true;
 
             return this.challengesRepository.SaveChangesAsync();
+        }
+
+        public bool IsChallengeStarted(string userId, int challengeId)
+        {
+            return this.startedChallengesRepository
+                .All()
+                .Any(c => c.UserId == userId && challengeId == c.ChallengeId);
+        }
+
+        public bool IsChallengeSaved(string userId, int challengeId)
+        {
+            return this.savedChallengesRepository
+                .All()
+                .Any(c => c.UserId == userId && challengeId == c.ChallengeId);
+        }
+
+        public async Task AddToSavedAsync(string userId, int challengeId)
+        {
+            UserChallengeFavourite entity = new UserChallengeFavourite();
+            entity.ChallengeId = challengeId;
+            entity.UserId = userId;
+
+            Challenge challenge = this.challengesRepository
+                .All()
+                .Where(c => c.Id == challengeId)
+                .FirstOrDefault();
+            if (challenge == null)
+            {
+                throw new ArgumentException("Can't find challenge with id " + challengeId);
+            };
+
+            challenge.UsersWithFavouriteChallenge.Add(entity);
+            await this.savedChallengesRepository.SaveChangesAsync();
         }
     }
 }

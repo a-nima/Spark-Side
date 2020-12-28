@@ -46,14 +46,26 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            ChallengeDTO challenge = await this.challengesService.GetByIdAsync(id);
+            ChallengeDetailsViewModel details = new ChallengeDetailsViewModel();
+            details.Challenge = await this.challengesService.GetByIdAsync(id);
 
-            if (challenge == null)
+            if (details.Challenge == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(challenge);
+            if(!details.Challenge.IsPublished && details.Challenge.Author.LoginName != this.User.Identity.Name)
+            {
+                return this.NotFound();
+            }
+
+            string userId = this.userManager.GetUserId(this.User);
+
+            details.IsStartButtonDisabled = this.challengesService.IsChallengeStarted(userId, details.Challenge.Id);
+            details.IsSaveButtonDisabled = this.challengesService.IsChallengeSaved(userId, details.Challenge.Id);
+
+
+            return this.View(details);
         }
     }
 }

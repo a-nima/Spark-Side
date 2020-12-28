@@ -1,0 +1,49 @@
+﻿
+@model SparkSide.Services.Data.Models.ChallengeDTO
+
+<script type="text/javascript">
+    $(() => {
+        var startButton = $("#btnStart");
+        startButton.click(() => {
+            startButton.attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("StartChallenge", "UserActions")',
+                data: JSON.stringify({
+                    'ChallengeId': '@Model.Id',
+                }),
+                contentType: "application/json",
+                success: function () {
+                    startButton.text("Started");
+                },
+                error: function () {
+                    alert("Error starting challenge.");
+                    startButton.attr("disabled", false);
+                }
+            });
+            return false;
+        });
+
+        var saveButton  = $("#btnSave");
+        saveButton.click(() => {
+            saveButton.attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("SaveChallenge", "UserActions")',
+                data: JSON.stringify({
+                    'ChallengeId': '@Model.Id',
+                }),
+                contentType: "application/json",
+                success: function () {
+                    saveButton.text("Saved");
+                },
+                error: function () {
+                    alert("Error saving challenge");
+                    saveButton.attr("disabled", false);
+                }
+            });
+            return false;
+        });
+    });
+
+</script>  

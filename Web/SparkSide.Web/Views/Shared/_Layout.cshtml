@@ -40,14 +40,14 @@
         {
             <div class="mdl-layout__drawer custom-menu is-casting-shadow">
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" asp-controller="Home" asp-action="Index"><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Home" asp-action="Index"><i class="material-icons menu-icon">dashboard</i>Dashboard</a>
                     @if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
                     {
                         <a class="mdl-navigation__link" asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Index"><i class="material-icons menu-icon">favorite_border</i>My Challenges</a>
                     }
-                    <a class="mdl-navigation__link" asp-controller="Challenges" asp-action="Followed"><i class="material-icons menu-icon">star_border</i>Followed Challenges</a>
-                    <a class="mdl-navigation__link" asp-controller="Challenges" asp-action="Saved"><i class="material-icons menu-icon">bookmark_border</i>Saved Challenges</a>
-                    <a class="mdl-navigation__link" asp-controller="Explore" asp-action="AllChallenges"><i class="material-icons menu-icon">explore</i>Explore</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Challenges" asp-action="Followed"><i class="material-icons menu-icon">star_border</i>Followed Challenges</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Challenges" asp-action="Saved"><i class="material-icons menu-icon">bookmark_border</i>Saved Challenges</a>
+                    <a class="mdl-navigation__link" asp-area="" asp-controller="Explore" asp-action="AllChallenges"><i class="material-icons menu-icon">explore</i>Explore</a>
                     <a class="mdl-navigation__link" href="">About</a>
                 </nav>
             </div>

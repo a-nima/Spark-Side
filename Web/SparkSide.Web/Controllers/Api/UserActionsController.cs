@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
+    using SparkSide.Web.ViewModels.Challenges;
     using SparkSide.Web.ViewModels.Users;
 
     [Authorize]
@@ -19,14 +20,18 @@
     public class UserActionsController : ControllerBase
     {
         private readonly IUsersService usersService;
+        private readonly IChallengesService challengesService;
+
         private readonly UserManager<ApplicationUser> userManager;
 
         public UserActionsController(
             IUsersService usersService,
+            IChallengesService challengesService,
             UserManager<ApplicationUser> userManager)
         {
             this.usersService = usersService;
             this.userManager = userManager;
+            this.challengesService = challengesService;
         }
 
         [HttpPost]
@@ -66,6 +71,29 @@
             await this.usersService.UnfollowAsync(currentUserId, model.UserId);
 
             return this.Ok();
+        }
+
+        [HttpPost]
+        [Route(nameof(SaveChallenge))]
+        public async Task<IActionResult> SaveChallenge([FromBody] ChallengeIdInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            try
+            {
+                string userId = this.userManager.GetUserId(this.User);
+                await this.challengesService.AddToSavedAsync(userId, input.ChallengeId);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest();
+            }
+
         }
     }
 }

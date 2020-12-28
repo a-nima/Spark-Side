@@ -1,8 +1,8 @@
-﻿@model SparkSide.Services.Data.Models.ChallengeDTO
-
+﻿@using SparkSide.Common
+@model SparkSide.Web.ViewModels.Challenges.ChallengeDetailsViewModel
 
 @{
-    this.ViewData["Title"] = Model.Title;
+    this.ViewData["Title"] = Model.Challenge.Title;
 }
 
 <div>
@@ -14,36 +14,47 @@
 <center>
     <div class="mdl-card content-container challenge-container mdl-shadow--2dp ">
         <div class="title-container">
-            <h3>@Model.Title</h3>
+            <h3>@Model.Challenge.Title</h3>
         </div>
-        <div class="action-buttons">
-            <form class="form-button" method="post">
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                        asp-area="" asp-controller="Challenges" asp-action="Start" asp-route-id="@Model.Id">
-                    Start
-                </button>
-            </form>
-            <form class="form-button" method="post">
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-                        asp-area="" asp-controller="Challenges" asp-action="Save" asp-route-id="@Model.Id">
-                    Save
-                </button>
-            </form>
+        <div class="action-buttons-container">
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <div class="action-buttons">
+                    @if (this.User.Identity.Name == Model.Challenge.Author.LoginName && !Model.Challenge.IsPublished)
+                    {
+                        <a class="edit-icon mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
+                           asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Edit" asp-route-id="@Model.Challenge.Id">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    }
+                    else
+                    {
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                disabled="@Model.IsStartButtonDisabled" id="btnStart">
+                            Start
+                        </button>
+                        <button disabled="@Model.IsSaveButtonDisabled" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                                id="btnSave">
+                            Save
+                        </button>
+                    }
+                </div>
+            }
         </div>
         <div class="author-container">
-            by <a asp-controller="Users" asp-action="@Model.Author.LoginName">@Model.Author.FirstName @Model.Author.LastName</a>
+            by <a asp-controller="Users" asp-action="@Model.Challenge.Author.LoginName">@Model.Challenge.Author.FirstName @Model.Challenge.Author.LastName</a>
         </div>
         <div class="info">
             <div class="picture-container">
-                <img class="challenge-picture" src="@Model.PictureLink" />
+                <img class="challenge-picture" src="@Model.Challenge.PictureLink" />
             </div>
             <div class="challenge-info-container">
                 <div>
-                    <strong>@Model.DurationDays Days</strong>
+                    <strong>@Model.Challenge.DurationDays Days</strong>
                 </div>
                 <br />
                 <div>
-                    <p>@Model.Description</p>
+                    <p>@Model.Challenge.Description</p>
                 </div>
             </div>
         </div>
@@ -56,3 +67,7 @@
         </div>
     </div>
 </center>
+
+@section Scripts {
+    <partial name="_SaveAndStartScriptsPartial" for="@Model.Challenge" />
+}

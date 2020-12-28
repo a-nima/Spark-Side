@@ -373,7 +373,6 @@ namespace SparkSide.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
                     ChallengeId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -387,12 +386,6 @@ namespace SparkSide.Data.Migrations
                     table.ForeignKey(
                         name: "FK_UsersChallengesActive_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UsersChallengesActive_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -417,7 +410,6 @@ namespace SparkSide.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -433,12 +425,7 @@ namespace SparkSide.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UsersChallengesFavourite_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+
                     table.ForeignKey(
                         name: "FK_UsersChallengesFavourite_Challenges_ChallengeId",
                         column: x => x.ChallengeId,
@@ -591,15 +578,6 @@ namespace SparkSide.Data.Migrations
                 table: "UsersChallengesActive",
                 column: "IsDeleted");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersChallengesActive_UserId",
-                table: "UsersChallengesActive",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersChallengesActive_UserId1",
-                table: "UsersChallengesActive",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersChallengesFavourite_ChallengeId",
@@ -615,11 +593,6 @@ namespace SparkSide.Data.Migrations
                 name: "IX_UsersChallengesFavourite_UserId",
                 table: "UsersChallengesFavourite",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersChallengesFavourite_UserId1",
-                table: "UsersChallengesFavourite",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersFollows_FollowedId",

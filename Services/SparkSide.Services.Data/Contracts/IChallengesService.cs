@@ -21,5 +21,10 @@
         Task DeleteByIdAsync(int id);
 
         Task PublishAsync(int id);
+
+        bool IsChallengeStarted(string userId, int id);
+
+        bool IsChallengeSaved(string userId, int id);
+        Task AddToSavedAsync(string userId, int challengeId);
     }
 }

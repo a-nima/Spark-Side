@@ -711,9 +711,6 @@ namespace SparkSide.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChallengeId");
@@ -723,8 +720,6 @@ namespace SparkSide.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("UsersChallengesActive");
                 });
@@ -754,9 +749,6 @@ namespace SparkSide.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChallengeId");
@@ -764,8 +756,6 @@ namespace SparkSide.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("UsersChallengesFavourite");
                 });
@@ -1050,10 +1040,6 @@ namespace SparkSide.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("Challenge");
 
                     b.Navigation("User");
@@ -1071,10 +1057,6 @@ namespace SparkSide.Data.Migrations
                         .WithMany("FavouriteChallenges")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Challenge");
 

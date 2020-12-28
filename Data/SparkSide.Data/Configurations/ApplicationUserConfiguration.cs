@@ -30,12 +30,6 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             appUser
-                .HasMany(e => e.ActiveChallenges)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            appUser
                .HasMany(e => e.Comments)
                .WithOne()
                .HasForeignKey(e => e.AuthorId)
@@ -45,12 +39,6 @@
                .HasMany(e => e.CreatedChallenges)
                .WithOne(e => e.Author)
                .HasForeignKey(e => e.AuthorId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            appUser
-               .HasMany(e => e.FavouriteChallenges)
-               .WithOne()
-               .HasForeignKey(e => e.UserId)
                .OnDelete(DeleteBehavior.Restrict);
 
             appUser
