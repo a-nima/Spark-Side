@@ -63,7 +63,7 @@
             try
             {
                 await this.usersService.UpdateUserSettingsAsync(input, $"{this.environment.WebRootPath}/images");
-                return this.RedirectToAction("Index", "Users", this.User.Identity.Name);
+                return this.RedirectToAction("AllChallenges", "Explore");
             }
             catch
             {

@@ -21,7 +21,7 @@
         public async Task<string> UploadAsync(IFormFile inputFile, string folderName, string id, string path)
         {
             string blobPath = "";
-            Directory.CreateDirectory($"{path}/challenges/");
+            Directory.CreateDirectory($"{path}/{folderName}/");
 
             var extension = Path.GetExtension(inputFile.FileName).TrimStart('.');
 
@@ -32,12 +32,7 @@
                 await inputFile.CopyToAsync(fileStream);
             }
 
-            var configuration = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                            .Build();
-
-            string connectionString = configuration.GetConnectionString("BlobConnection");
+            string connectionString = ConfigurationStrings.BlobConnectionString;
 
             BlobContainerClient container = new BlobContainerClient(connectionString, folderName);
             await container.CreateIfNotExistsAsync();
@@ -52,10 +47,10 @@
             }
             finally
             {
-                if (File.Exists(physicalPath))
-                {
-                    File.Delete(physicalPath);
-                }
+                //if (File.Exists(physicalPath))
+                //{
+                //    File.Delete(physicalPath);
+                //}
             }
 
             return GlobalConstants.BlobStorageBaseUrl + folderName + "/" + id;
