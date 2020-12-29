@@ -82,6 +82,8 @@
                 return this.NotFound();
             }
 
+            details.Challenge.Tasks = this.challengesService.GetChallengeTasks(id).Select(c => new ChallengeTaskDTO(c)).ToList();
+
             string userId = this.userManager.GetUserId(this.User);
 
             details.IsStartButtonDisabled = this.challengesService.IsChallengeStarted(userId, details.Challenge.Id);

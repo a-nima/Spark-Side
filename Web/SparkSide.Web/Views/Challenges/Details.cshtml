@@ -59,6 +59,26 @@
             </div>
         </div>
         <div>
+            @for (int i = 1; i <= Model.Challenge.DurationDays; i++)
+            {
+                <div id="Day-@i" class="challenge-task-card mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                        <center><h2 class="mdl-card__title-text">Day @i</h2></center>
+                    </div>
+                    <ul id="tasksDay-@i" class="mdl-list">
+                        @foreach (var task in Model.Challenge.Tasks.Where(t => t.Day == i))
+                        {
+                        <li class="mdl-list__item">
+                            <span class="mdl-list__item-primary-content">
+                                @task.Title
+                            </span>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+        <div>
             @foreach (var tag in Model.Challenge.Tags)
             {
                 <span class="tag-chip-container mdl-chip">
@@ -66,20 +86,20 @@
                 </span>
             }
         </div>
-        @if (Model.Challenge.IsPublished)
+        <!--if (Model.Challenge.IsPublished)
         {
             <div>
                 <div class="border-bottom">
                     <h4>Comments (3)</h4>
                 </div>
-                <br />
-                @*comments*@
-            </div>
-        }
-        <br/>
+                <br />-->
+        @*comments*@
+        <!--</div>
+        }-->
+        <br />
     </div>
 </center>
 
 @section Scripts {
-    <partial name="_SaveAndStartScriptsPartial" for="@Model.Challenge" />
+<partial name="_SaveAndStartScriptsPartial" for="@Model.Challenge" />
 }

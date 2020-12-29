@@ -342,6 +342,7 @@ h3 {
 }
 
 .create-challenge-form {
+    text-align: center;
     width: 100%;
     padding-left: 20px;
     padding-bottom: 20px;
@@ -369,3 +370,14 @@ h3 {
     .partial-challenge-container {
         z-index: 1;
     }
+
+.challenge-task-card {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin: 15px;
+}
+.challenge-task-card .mdl-card__title-text {
+    color: #757575 !important;
+}

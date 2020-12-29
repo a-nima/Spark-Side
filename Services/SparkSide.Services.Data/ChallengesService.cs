@@ -105,7 +105,7 @@
             return challenges;
         }
 
-        private ICollection<ChallengeTask> GetChallengeTasks(int challengeId)
+        public ICollection<ChallengeTask> GetChallengeTasks(int challengeId)
         {
             return this.challengeTasksRepository
                 .All()
@@ -113,7 +113,7 @@
                 .ToList();
         }
 
-        private ICollection<UserChallengeTask> GetUserChallengeTasks(string userId, int challengeId)
+        public ICollection<UserChallengeTask> GetUserChallengeTasks(string userId, int challengeId)
         {
             return this.userChallengeTasksRepository
                 .All()
@@ -278,6 +278,20 @@
             {
                 await this.tagsService.AddTag(challenge.Id, input.Tags.ElementAt(i));
             }
+
+            for (int i = 0; i < input.Tasks.Count; i++)
+            {
+                ChallengeTaskInputModel inputTask = input.Tasks.ElementAt(i);
+                ChallengeTask task = new ChallengeTask
+                {
+                    Title = inputTask.Title,
+                    Day = inputTask.Day,
+                    ChallengeId = challenge.Id,
+                };
+
+                await this.challengeTasksRepository.AddAsync(task);
+            }
+            await this.challengeTasksRepository.SaveChangesAsync();
 
             if (input.Image != null)
             {

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
-
+    using SparkSide.Data.Models;
     using SparkSide.Services.Data.Models;
     using SparkSide.Services.DTOs;
     using SparkSide.Web.ViewModels.Challenges;
@@ -20,6 +20,10 @@
         ICollection<ChallengeDTO> GetUserStartedChallenges(string userId);
 
         ICollection<ChallengeDTO> GetUserCreatedChallenges(string userId);
+
+        ICollection<UserChallengeTask> GetUserChallengeTasks(string userId, int challengeId);
+
+        ICollection<ChallengeTask> GetChallengeTasks(int challengeId);
 
         Task<ChallengeDTO> GetByIdAsync(int id);
 

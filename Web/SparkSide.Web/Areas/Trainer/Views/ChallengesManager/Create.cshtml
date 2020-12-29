@@ -42,6 +42,10 @@
             <br />
             <input id="durationDays" class="mdl-textfield__input" asp-for="DurationDays" hidden type="number">
             <br />
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="addDay()" name="action">Add Day</a>
+            <br/>
+            <div id="challenge-tasks-container">
+            </div>
             <div class="form-button">
                 <button class="mdl-button--colored mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action">Save</button>
             </div>
@@ -54,8 +58,57 @@
 
 @section Scripts {
     <script>
-        var tags = [];
+        var days = 1;
+        (() => {
+            let dayComponent = $getDayComponent(days);
+            $("#challenge-tasks-container").append(dayComponent);
+            days++;
+        })();
+        // Challenge Tasks
+        var taskIndex = 0;
+        function $getDayComponent(day) {
+            return $(`
+                <div id="Day-${day}" class="challenge-task-card mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                    <center><h2 class="mdl-card__title-text">Day ${day}</h2></center>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <label class="mdl-textfield__label" for="taskTitle${day}">Add Excercise...</label>
+                        <input class="mdl-textfield__input" id="taskTitle${day}" type="text">
+                        <span class="textfield__error"></span>
+                    </div>
+                    <a id="addTask"  onclick="addTask(${day})" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                        <i class="material-icons">add</i>
+                    </a>
+                    <ul id="tasksDay${day}" class="mdl-list">
+                    </ul>
+                </div>`)
+        }
 
+        function addDay() {
+            let dayComponent = $getDayComponent(days);
+            $("#challenge-tasks-container").append(dayComponent);
+            $("#durationDays").val(days);
+            days++;
+        }
+
+        function addTask(day) {
+            var taskTitle = $(`#taskTitle${day}`).val();
+            $(`#tasksDay${day}`).append(`
+                    <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        ${taskTitle}
+                    </span>
+                    <input type="hidden" value="${taskTitle}" name="Tasks[${taskIndex}].Title"/>
+                    <input type="hidden" value="${day}" name="Tasks[${taskIndex}].Day"/>
+                    </li>
+                `);
+            $(`#taskTitle${day}`).val("");
+            taskIndex++;
+        }
+
+        // Tags
+        var tags = [];
         function addTag() {
             let tagInput = $("#tagInput");
             let tag = tagInput.val().trim().toLowerCase();
@@ -69,11 +122,11 @@
 
             $("#tagsContainer")
                 .append(`
-                        <span class="tag-chip-container mdl-chip mdl-chip--deletable">
-                            <span class="mdl-chip__text">${tag}</span>
-                            <input hidden type="text" value="${tag}" name="Tags[${tags.length}]"/>
-                            <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                        </span>`);
+                    <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                        <span class="mdl-chip__text">${tag}</span>
+                        <input hidden type="text" value="${tag}" name="Tags[${tags.length}]"/>
+                        <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                    </span>`);
             tags.push(tag);
             tagInput.val("");
         }
@@ -87,11 +140,11 @@
 
                 $("#tagsContainer")
                     .append(`
-                            <span class="tag-chip-container mdl-chip mdl-chip--deletable">
-                                <span class="mdl-chip__text">${tag}</span>
-                                <input hidden type="text" value="${tag}" name="Tags[${i}]"/>
-                                <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                            </span>`);
+                                                    <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                                                        <span class="mdl-chip__text">${tag}</span>
+                                                        <input hidden type="text" value="${tag}" name="Tags[${i}]"/>
+                                                        <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                                                    </span>`);
             }
         }
     </script>

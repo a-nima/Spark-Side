@@ -6,6 +6,7 @@
     using System.Text;
 
     using SparkSide.Data.Models;
+    using SparkSide.Services.DTOs;
 
     public class ChallengeDTO
     {
@@ -40,6 +41,8 @@
         public UserDTO Author { get; set; }
 
         public bool IsPublished { get; set; }
+
+        public IEnumerable<ChallengeTaskDTO> Tasks { get; set; }
 
         public ICollection<string> Tags { get; set; }
     }
