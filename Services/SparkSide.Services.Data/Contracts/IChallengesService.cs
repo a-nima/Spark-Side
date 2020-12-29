@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using SparkSide.Services.Data.Models;
+    using SparkSide.Services.DTOs;
     using SparkSide.Web.ViewModels.Challenges;
 
     public interface IChallengesService
@@ -14,7 +15,7 @@
 
         ICollection<ChallengeDTO> GetUserSavedChallenges(string userId);
 
-        ICollection<ChallengeDTO> GetUserFollowedChallenges(string userId);
+        ICollection<ActiveChallengeDTO> GetUserFollowedChallenges(string userId);
 
         ICollection<ChallengeDTO> GetUserCreatedChallenges(string userId);
 

@@ -124,7 +124,7 @@
         [Route(nameof(StartChallenge))]
         public async Task<IActionResult> StartChallenge([FromBody] ChallengeIdInputModel input)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.BadRequest();
             }

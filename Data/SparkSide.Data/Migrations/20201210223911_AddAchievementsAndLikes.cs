@@ -18,7 +18,6 @@ namespace SparkSide.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: true),
                     PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
-                    ChallengeId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -30,12 +29,6 @@ namespace SparkSide.Data.Migrations
                     table.ForeignKey(
                         name: "FK_ChallengeTasks_Challenges_ChallengeId",
                         column: x => x.ChallengeId,
-                        principalTable: "Challenges",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ChallengeTasks_Challenges_ChallengeId1",
-                        column: x => x.ChallengeId1,
                         principalTable: "Challenges",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -76,11 +69,6 @@ namespace SparkSide.Data.Migrations
                 name: "IX_ChallengeTasks_ChallengeId",
                 table: "ChallengeTasks",
                 column: "ChallengeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChallengeTasks_ChallengeId1",
-                table: "ChallengeTasks",
-                column: "ChallengeId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChallengeTasks_IsDeleted",

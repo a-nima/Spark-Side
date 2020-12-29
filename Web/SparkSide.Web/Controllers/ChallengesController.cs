@@ -12,6 +12,7 @@
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
     using SparkSide.Services.Data.Models;
+    using SparkSide.Services.DTOs;
     using SparkSide.Web.ViewModels.Challenges;
 
     public class ChallengesController : Controller
@@ -33,6 +34,22 @@
         }
 
         [Authorize]
+        public async Task<IActionResult> CancelChallenge(int id)
+        {
+            try
+            {
+                string userId = this.userManager.GetUserId(this.User);
+                await this.challengesService.RemoveFromStartedAsync(userId, id);
+                return this.RedirectToAction("Saved");
+            }
+            catch
+            {
+                return this.NotFound();
+            }
+
+        }
+
+        [Authorize]
         public IActionResult Saved()
         {
             string userId = this.userManager.GetUserId(this.User);
@@ -44,7 +61,10 @@
         [Authorize]
         public IActionResult Followed()
         {
-            return this.View();
+            string userId = this.userManager.GetUserId(this.User);
+            ICollection<ActiveChallengeDTO> challenges = this.challengesService.GetUserFollowedChallenges(userId);
+
+            return this.View(challenges);
         }
 
         public async Task<IActionResult> Details(int id)

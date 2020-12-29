@@ -291,7 +291,6 @@ namespace SparkSide.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
-                    ChallengeId1 = table.Column<int>(type: "int", nullable: true),
                     TagId = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -307,12 +306,7 @@ namespace SparkSide.Data.Migrations
                         principalTable: "Challenges",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ChallengesTags_Challenges_ChallengeId1",
-                        column: x => x.ChallengeId1,
-                        principalTable: "Challenges",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    
                     table.ForeignKey(
                         name: "FK_ChallengesTags_Tags_TagId",
                         column: x => x.TagId,
@@ -331,7 +325,6 @@ namespace SparkSide.Data.Migrations
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AuthorId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
-                    ChallengeId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -358,12 +351,7 @@ namespace SparkSide.Data.Migrations
                         principalTable: "Challenges",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_Challenges_ChallengeId1",
-                        column: x => x.ChallengeId1,
-                        principalTable: "Challenges",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                
                 });
 
             migrationBuilder.CreateTable(
@@ -374,7 +362,6 @@ namespace SparkSide.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
-                    ChallengeId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -392,12 +379,6 @@ namespace SparkSide.Data.Migrations
                     table.ForeignKey(
                         name: "FK_UsersChallengesActive_Challenges_ChallengeId",
                         column: x => x.ChallengeId,
-                        principalTable: "Challenges",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UsersChallengesActive_Challenges_ChallengeId1",
-                        column: x => x.ChallengeId1,
                         principalTable: "Challenges",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -499,11 +480,6 @@ namespace SparkSide.Data.Migrations
                 column: "ChallengeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChallengesTags_ChallengeId1",
-                table: "ChallengesTags",
-                column: "ChallengeId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ChallengesTags_IsDeleted",
                 table: "ChallengesTags",
                 column: "IsDeleted");
@@ -519,19 +495,9 @@ namespace SparkSide.Data.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AuthorId1",
-                table: "Comments",
-                column: "AuthorId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comments_ChallengeId",
                 table: "Comments",
                 column: "ChallengeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_ChallengeId1",
-                table: "Comments",
-                column: "ChallengeId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_IsDeleted",
@@ -549,11 +515,6 @@ namespace SparkSide.Data.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SiteAlerts_AuthorId1",
-                table: "SiteAlerts",
-                column: "AuthorId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SiteAlerts_IsDeleted",
                 table: "SiteAlerts",
                 column: "IsDeleted");
@@ -567,11 +528,6 @@ namespace SparkSide.Data.Migrations
                 name: "IX_UsersChallengesActive_ChallengeId",
                 table: "UsersChallengesActive",
                 column: "ChallengeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersChallengesActive_ChallengeId1",
-                table: "UsersChallengesActive",
-                column: "ChallengeId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersChallengesActive_IsDeleted",

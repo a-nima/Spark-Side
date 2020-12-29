@@ -11,6 +11,7 @@
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
     using SparkSide.Services.Data.Models;
+    using SparkSide.Services.DTOs;
     using SparkSide.Web.ViewModels.Challenges;
 
     public class ChallengesService : IChallengesService
@@ -20,16 +21,25 @@
         private readonly IDeletableEntityRepository<Challenge> challengesRepository;
         private readonly IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository;
         private readonly IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository;
+        private readonly IDeletableEntityRepository<UserChallengeTask> userChallengeTasksRepository;
+        private readonly IDeletableEntityRepository<ChallengeTask> challengeTasksRepository;
+
+
         private readonly ITagsService tagsService;
         public ChallengesService(
             IDeletableEntityRepository<Challenge> challengesRepository,
             IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository,
             IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository,
+            IDeletableEntityRepository<ChallengeTask> challengeTasksRepository,
+            IDeletableEntityRepository<UserChallengeTask> userChallengeTasksRepository,
             ITagsService tagsService)
         {
             this.challengesRepository = challengesRepository;
             this.savedChallengesRepository = savedChallengesRepository;
             this.startedChallengesRepository = startedChallengesRepository;
+            this.challengeTasksRepository = challengeTasksRepository;
+            this.userChallengeTasksRepository = userChallengeTasksRepository;
+
             this.tagsService = tagsService;
         }
 
@@ -54,13 +64,51 @@
                 .ToList();
         }
 
-        public ICollection<ChallengeDTO> GetUserFollowedChallenges(string userId)
+        public ICollection<ActiveChallengeDTO> GetUserFollowedChallenges(string userId)
         {
-            return this.challengesRepository
+            ICollection<ActiveChallengeDTO> challenges = this.challengesRepository
                 .All()
-                .Include(c => c.Author)
                 .Where(c => c.UsersWithActiveChallenge.Any(u => u.UserId == userId))
-                .Select(c => new ChallengeDTO(c))
+                .Select(c => new ActiveChallengeDTO
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Progress = 0,
+                })
+                .ToList();
+
+            foreach (ActiveChallengeDTO challenge in challenges)
+            {
+                ICollection<UserChallengeTask> userChallengeTasks = this.GetUserChallengeTasks(userId, challenge.Id);
+                ICollection<ChallengeTask> challengeTasks = this.GetChallengeTasks(challenge.Id);
+
+                UserChallengeTask firstTask = userChallengeTasks.OrderBy(t => t.CompletedOn).FirstOrDefault();
+                if (userChallengeTasks.Count != 0 && challengeTasks.Count() != 0)
+                {
+                    int percentComplete = (userChallengeTasks.Count() / challengeTasks.Count()) * 100;
+
+                    challenge.Progress = percentComplete;
+                    challenge.StartedOn = firstTask?.CompletedOn;
+                }
+            }
+
+            return challenges;
+        }
+
+        private ICollection<ChallengeTask> GetChallengeTasks(int challengeId)
+        {
+            return this.challengeTasksRepository
+                .All()
+                .Where(c => c.ChallengeId == challengeId)
+                .ToList();
+        }
+
+        private ICollection<UserChallengeTask> GetUserChallengeTasks(string userId, int challengeId)
+        {
+            return this.userChallengeTasksRepository
+                .All()
+                .Include(c => c.ChallengeTask)
+                .Where(c => c.UserID == userId && c.ChallengeTask.ChallengeId == challengeId)
                 .ToList();
         }
 
@@ -183,8 +231,8 @@
                 throw new ArgumentException("Can't find challenge with id " + challengeId);
             }
 
-            challenge.UsersWithActiveChallenge.Add(entity);
-            await this.startedChallengesRepository.SaveChangesAsync();
+            await this.startedChallengesRepository.AddAsync(entity);
+            await this.challengesRepository.SaveChangesAsync();
         }
 
         public async Task RemoveFromStartedAsync(string userId, int challengeId)

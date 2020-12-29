@@ -301,9 +301,6 @@ namespace SparkSide.Data.Migrations
                     b.Property<int>("ChallengeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChallengeId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -322,8 +319,6 @@ namespace SparkSide.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChallengeId");
-
-                    b.HasIndex("ChallengeId1");
 
                     b.HasIndex("IsDeleted");
 
@@ -347,9 +342,6 @@ namespace SparkSide.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ChallengeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChallengeId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -376,8 +368,6 @@ namespace SparkSide.Data.Migrations
                     b.HasIndex("AuthorId1");
 
                     b.HasIndex("ChallengeId");
-
-                    b.HasIndex("ChallengeId1");
 
                     b.HasIndex("IsDeleted");
 
@@ -502,9 +492,6 @@ namespace SparkSide.Data.Migrations
                     b.Property<int>("ChallengeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChallengeId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -523,8 +510,6 @@ namespace SparkSide.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChallengeId");
-
-                    b.HasIndex("ChallengeId1");
 
                     b.HasIndex("IsDeleted");
 
@@ -675,10 +660,6 @@ namespace SparkSide.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
-                        .WithMany()
-                        .HasForeignKey("ChallengeId1");
-
                     b.HasOne("SparkSide.Data.Models.Tag", "Tag")
                         .WithMany("Challenges")
                         .HasForeignKey("TagId")
@@ -708,10 +689,6 @@ namespace SparkSide.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
-                        .WithMany()
-                        .HasForeignKey("ChallengeId1");
-
                     b.Navigation("Author");
 
                     b.Navigation("Challenge");
@@ -739,10 +716,6 @@ namespace SparkSide.Data.Migrations
                         .HasForeignKey("ChallengeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
-                        .WithMany()
-                        .HasForeignKey("ChallengeId1");
 
                     b.HasOne("SparkSide.Data.Models.ApplicationUser", null)
                         .WithMany("ActiveChallenges")

@@ -1,4 +1,4 @@
-﻿@model SparkSide.Web.ViewModels.Challenges.FollowedChallengesViewModel
+﻿@model ICollection<SparkSide.Services.DTOs.ActiveChallengeDTO>
 
 @{
     this.ViewData["Title"] = "Followed Challenges";
@@ -8,4 +8,40 @@
     <div class="page-title">
         <h3>@ViewData["Title"]</h3>
     </div>
+</div>
+
+<div class="content-container">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Title</th>
+                <th class="mdl-data-table__cell--non-numeric">Progress</th>
+                <th class="mdl-data-table__cell--non-numeric">Started On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var challenge in Model)
+            {
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">@challenge.Title</td>
+                <td >@challenge.Progress %</td>
+                <td class="mdl-data-table__cell--non-numeric">@challenge.StartedOn</td>
+                <td>
+                    <a class="mdl-button mdl-js-button mdl-button--primary"
+                       asp-area="" asp-controller="Challenges" asp-action="Details" asp-route-id="@challenge.Id">
+                        Details
+                    </a>
+                    <span>|</span>
+                    <form class="form-button" method="post">
+                        <button type="submit" class="mdl-button mdl-js-button mdl-button--primary"
+                                asp-area="" asp-controller="Challenges" asp-action="CancelChallenge" asp-route-id="@challenge.Id">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>

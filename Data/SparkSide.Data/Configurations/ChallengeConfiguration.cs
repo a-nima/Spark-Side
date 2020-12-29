@@ -14,35 +14,6 @@
     {
         public void Configure(EntityTypeBuilder<Challenge> challenge)
         {
-            challenge
-               .HasMany(e => e.Comments)
-               .WithOne()
-               .HasForeignKey(e => e.ChallengeId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            challenge
-               .HasMany(e => e.UsersWithActiveChallenge)
-               .WithOne()
-               .HasForeignKey(e => e.ChallengeId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            challenge
-               .HasMany(e => e.UsersWithActiveChallenge)
-               .WithOne()
-               .HasForeignKey(e => e.ChallengeId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            challenge
-               .HasMany(e => e.Tags)
-               .WithOne()
-               .HasForeignKey(e => e.ChallengeId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            challenge
-                .HasMany(e => e.ChallengeTasks)
-                .WithOne()
-                .HasForeignKey(e => e.ChallengeId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
