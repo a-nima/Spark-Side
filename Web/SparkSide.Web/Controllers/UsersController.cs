@@ -12,21 +12,63 @@
     using SparkSide.Services.Data.Models;
     using SparkSide.Web.ViewModels.Users;
     using SparkSide.Common;
+    using Microsoft.AspNetCore.Hosting;
 
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
         private readonly IChallengesService challengesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
 
         public UsersController(
             IUsersService usersService,
             IChallengesService challengesService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment)
         {
             this.usersService = usersService;
             this.userManager = userManager;
             this.challengesService = challengesService;
+            this.environment = environment;
+        }
+
+        [Authorize]
+        [Route("Users/Settings")]
+        public async Task<IActionResult> Settings()
+        {
+            ApplicationUser user = await this.userManager.GetUserAsync(this.User);
+            UserSettingsInputModel model = new UserSettingsInputModel(user);
+
+            return this.View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("Users/Settings")]
+        public async Task<IActionResult> Settings(UserSettingsInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            string currentUserId = this.userManager.GetUserId(this.User);
+
+            if (currentUserId != input.UserId)
+            {
+                return this.View();
+            }
+
+            try
+            {
+                await this.usersService.UpdateUserSettingsAsync(input, $"{this.environment.WebRootPath}/images");
+                return this.RedirectToAction("Index", "Users", this.User.Identity.Name);
+            }
+            catch
+            {
+                return this.View();
+            }
         }
 
         [Authorize]
@@ -66,6 +108,5 @@
 
             return this.View(model);
         }
-
     }
 }

@@ -1,0 +1,52 @@
+﻿@model SparkSide.Web.ViewModels.Users.UserSettingsInputModel
+
+@using System.Collections.Generic
+@{
+    this.ViewData["Title"] = "Settings";
+}
+
+<div>
+    <div class="page-title">
+        <h3>@ViewData["Title"]</h3>
+    </div>
+</div>
+
+<div class="content-container">
+    <div class="mdl-card create-challenge-form mdl-shadow--2dp">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="file" asp-for="ProfilePicture">
+                <span class="textfield__error" asp-validation-for="ProfilePicture"></span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="FirstName"></label>
+                <input class="mdl-textfield__input" asp-for="FirstName" type="text">
+                <span class="textfield__error" asp-validation-for="FirstName"></span>
+            </div>
+            <br />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="LastName"></label>
+                <input class="mdl-textfield__input" asp-for="LastName" type="text">
+                <span class="textfield__error" asp-validation-for="LastName"></span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="Email"></label>
+                <input class="mdl-textfield__input" asp-for="Email" type="text">
+                <span class="textfield__error" asp-validation-for="Email"></span>
+            </div>
+            <br />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" asp-for="Description">Description</label>
+                <textarea class="mdl-textfield__input" multiline asp-for="Description"></textarea>
+                <span class="textfield__error" asp-validation-for="Description"></span>
+            </div>
+            <input type="hidden" asp-for="UserId"/>
+            <div class="form-button">
+                <button class="mdl-button--colored mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="action">Save</button>
+            </div>
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+               asp-area="" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+            <br />
+        </form>
+    </div>
+</div>

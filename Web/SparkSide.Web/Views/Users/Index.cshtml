@@ -26,7 +26,7 @@
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--3-col profile-col">
             <div class="profile-picture-container">
-                <img src="@Model.User.ProfilePictureLink" />
+                <img src="@Model.User.ProfilePictureLink" asp-append-version="true"/>
             </div>
             <div class="profile-follows">
                 <span><strong>@Model.User.FollowingCount</strong> following</span>

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -11,9 +12,12 @@
     using SparkSide.Data.Models;
     using SparkSide.Services.Data.Contracts;
     using SparkSide.Services.Data.Models;
+    using SparkSide.Web.ViewModels.Users;
 
     public class UsersService : IUsersService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
+
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<UserFollow> userFollowRepository;
         private readonly UserManager<ApplicationUser> userManager;
@@ -98,6 +102,43 @@
             }
 
             return Task.FromResult(false);
+        }
+
+        public async Task UpdateUserSettingsAsync(UserSettingsInputModel input, string path)
+        {
+            ApplicationUser user = this.usersRepository
+                .All()
+                .Where(u => u.Id == input.UserId)
+                .FirstOrDefault();
+
+            if (user != null)
+            {
+                user.FirstName = input.FirstName;
+                user.LastName = input.LastName;
+                user.Email = input.Email;
+                user.Description = input.Description;
+
+                if (input.ProfilePicture != null)
+                {
+                    Directory.CreateDirectory($"{path}/challenges/");
+
+                    var extension = Path.GetExtension(input.ProfilePicture.FileName).TrimStart('.');
+                    if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                    {
+                        throw new Exception($"Invalid image extension {extension}");
+                    }
+
+                    var physicalPath = $"{path}/challenges/{user.Id}.{extension}";
+
+                    using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                    {
+                        await input.ProfilePicture.CopyToAsync(fileStream);
+                    }
+
+                    user.ProfilePictureLink = $"~/images/challenges/{user.Id}.{extension}";
+                    await this.usersRepository.SaveChangesAsync();
+                }
+            }
         }
     }
 }
