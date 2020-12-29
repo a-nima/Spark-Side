@@ -21,16 +21,18 @@
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<UserFollow> userFollowRepository;
         private readonly UserManager<ApplicationUser> userManager;
-
+        private readonly IFileService fileService;
 
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             IDeletableEntityRepository<UserFollow> userFollowRepository,
+            IFileService fileService,
             UserManager<ApplicationUser> userManager)
         {
             this.usersRepository = usersRepository;
             this.userFollowRepository = userFollowRepository;
             this.userManager = userManager;
+            this.fileService = fileService;
         }
 
         public UserDTO GetById(string id)
@@ -120,22 +122,9 @@
 
                 if (input.ProfilePicture != null)
                 {
-                    Directory.CreateDirectory($"{path}/challenges/");
+                    string blobPath = await this.fileService.UploadAsync(input.ProfilePicture, "users", user.Id, path);
 
-                    var extension = Path.GetExtension(input.ProfilePicture.FileName).TrimStart('.');
-                    if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
-                    {
-                        throw new Exception($"Invalid image extension {extension}");
-                    }
-
-                    var physicalPath = $"{path}/challenges/{user.Id}.{extension}";
-
-                    using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
-                    {
-                        await input.ProfilePicture.CopyToAsync(fileStream);
-                    }
-
-                    user.ProfilePictureLink = $"~/images/challenges/{user.Id}.{extension}";
+                    user.ProfilePictureLink = blobPath;
                     await this.usersRepository.SaveChangesAsync();
                 }
             }

@@ -23,16 +23,17 @@
         private readonly IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository;
         private readonly IDeletableEntityRepository<UserChallengeTask> userChallengeTasksRepository;
         private readonly IDeletableEntityRepository<ChallengeTask> challengeTasksRepository;
-
-
+        private readonly IFileService fileService;
         private readonly ITagsService tagsService;
+
         public ChallengesService(
             IDeletableEntityRepository<Challenge> challengesRepository,
             IDeletableEntityRepository<UserChallengeActive> startedChallengesRepository,
             IDeletableEntityRepository<UserChallengeFavourite> savedChallengesRepository,
             IDeletableEntityRepository<ChallengeTask> challengeTasksRepository,
             IDeletableEntityRepository<UserChallengeTask> userChallengeTasksRepository,
-            ITagsService tagsService)
+            ITagsService tagsService,
+            IFileService fileService)
         {
             this.challengesRepository = challengesRepository;
             this.savedChallengesRepository = savedChallengesRepository;
@@ -41,6 +42,7 @@
             this.userChallengeTasksRepository = userChallengeTasksRepository;
 
             this.tagsService = tagsService;
+            this.fileService = fileService;
         }
 
         public ICollection<ChallengeDTO> GetAll()
@@ -261,7 +263,6 @@
 
         public async Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string path)
         {
-            //TODO: Add days count
             Challenge challenge = new Challenge
             {
                 Title = input.Title,
@@ -295,22 +296,25 @@
 
             if (input.Image != null)
             {
-                Directory.CreateDirectory($"{path}/challenges/");
-
                 var extension = Path.GetExtension(input.Image.FileName).TrimStart('.');
                 if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
                 {
                     throw new Exception($"Invalid image extension {extension}");
                 }
 
-                var physicalPath = $"{path}/challenges/{challenge.Id}.{extension}";
+                string blobPath = await this.fileService.UploadAsync(input.Image, "challenges", challenge.Id.ToString(), path);
+                //Directory.CreateDirectory($"{path}/challenges/");
 
-                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
-                {
-                    await input.Image.CopyToAsync(fileStream);
-                }
 
-                challenge.PictureLink = $"~/images/challenges/{challenge.Id}.{extension}";
+                //var physicalPath = $"{path}/challenges/{challenge.Id}.{extension}";
+
+                //using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                //{
+                //    await input.Image.CopyToAsync(fileStream);
+                //}
+
+                // challenge.PictureLink = $"~/images/challenges/{challenge.Id}.{extension}";
+                challenge.PictureLink = blobPath;
                 await this.challengesRepository.SaveChangesAsync();
             }
 

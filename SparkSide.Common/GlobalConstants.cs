@@ -9,5 +9,7 @@
         public const string TrainerRoleName = "Trainer";
 
         public const string DefaultProfilePictureName = "defaultProfilePhoto.jpg";
+
+        public const string BlobStorageBaseUrl = "https://sparksidestorage.blob.core.windows.net/";
     }
 }

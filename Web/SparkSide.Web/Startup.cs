@@ -68,6 +68,8 @@
             services.AddTransient<IChallengesService, ChallengesService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITagsService, TagsService>();
+            services.AddTransient<IFileService, FileService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
