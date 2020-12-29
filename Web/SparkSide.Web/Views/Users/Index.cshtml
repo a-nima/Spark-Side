@@ -53,19 +53,19 @@
     <div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
             <div class="mdl-tabs__tab-bar">
-                <a href="#feedPanel" class="mdl-tabs__tab is-active">Feed</a>
+                @*<a href="#feedPanel" class="mdl-tabs__tab is-active">Feed</a>*@
                 @if (Model.IsTrainer)
                 {
-                    <a href="#challengesPanel" class="mdl-tabs__tab">Challenges</a>
+                    <a href="#challengesPanel" class="mdl-tabs__tab is-active">Challenges</a>
                 }
                 <a href="#startedChallengesPanel" class="mdl-tabs__tab">Started Challenges</a>
             </div>
 
-            <div class="mdl-tabs__panel is-active" id="feedPanel">
+            @*<div class="mdl-tabs__panel is-active" id="feedPanel">
                 <center>
 
                 </center>
-            </div>
+            </div>*@
             @if (Model.IsTrainer)
             {
                 <div class="mdl-tabs__panel" id="challengesPanel">
