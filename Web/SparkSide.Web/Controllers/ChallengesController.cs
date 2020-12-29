@@ -35,7 +35,10 @@
         [Authorize]
         public IActionResult Saved()
         {
-            return this.View();
+            string userId = this.userManager.GetUserId(this.User);
+            ICollection<ChallengeDTO> challenges = this.challengesService.GetUserSavedChallenges(userId);
+
+            return this.View(challenges);
         }
 
         [Authorize]

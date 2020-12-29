@@ -5,7 +5,11 @@
         <h2 class="mdl-card__title-text">@Model.Title</h2>
     </div>
     <div class="mdl-card__supporting-text">
-        <span>@Model.Description</span>
+        @{
+            var description = Model.Description?.Length > 75 ? Model.Description?.Substring(0, 75) + "..." : Model.Description;
+
+        }
+        <span>@description</span>
         <br />
         <a asp-controller="Users" asp-action="@Model.Author.LoginName">@Model.Author.FirstName @Model.Author.LastName</a>
     </div>

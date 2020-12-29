@@ -95,5 +95,76 @@
             }
 
         }
+
+
+        [HttpPost]
+        [Route(nameof(UnsaveChallenge))]
+        public async Task<IActionResult> UnsaveChallenge([FromBody] ChallengeIdInputModel input)
+        {
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            try
+            {
+                string userId = this.userManager.GetUserId(this.User);
+                await this.challengesService.RemoveFromSavedAsync(userId, input.ChallengeId);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route(nameof(StartChallenge))]
+        public async Task<IActionResult> StartChallenge([FromBody] ChallengeIdInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            try
+            {
+                string userId = this.userManager.GetUserId(this.User);
+                await this.challengesService.AddToStartedAsync(userId, input.ChallengeId);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest();
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route(nameof(CancelChallenge))]
+        public async Task<IActionResult> CancelChallenge([FromBody] ChallengeIdInputModel input)
+        {
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            try
+            {
+                string userId = this.userManager.GetUserId(this.User);
+                await this.challengesService.RemoveFromStartedAsync(userId, input.ChallengeId);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest();
+            }
+        }
     }
 }

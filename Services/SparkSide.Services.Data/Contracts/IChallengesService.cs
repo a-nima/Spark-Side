@@ -29,6 +29,13 @@
         bool IsChallengeSaved(string userId, int id);
 
         Task AddToSavedAsync(string userId, int challengeId);
+        
+        Task RemoveFromSavedAsync(string userId, int challengeId);
+
+        Task AddToStartedAsync(string userId, int challengeId);
+
+
+        Task RemoveFromStartedAsync(string userId, int challengeId);
 
         Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string path);
 

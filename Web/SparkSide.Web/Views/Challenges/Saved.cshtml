@@ -1,4 +1,4 @@
-﻿@model SparkSide.Web.ViewModels.Challenges.SavedChallengesViewModel
+﻿@model IEnumerable<SparkSide.Services.Data.Models.ChallengeDTO>
 
 @{
     this.ViewData["Title"] = "Saved Challenges";
@@ -9,3 +9,44 @@
         <h3>@ViewData["Title"]</h3>
     </div>
 </div>
+
+<div class="card-results-container">
+    @foreach (var challenge in Model)
+    {
+        <div id="Challenge-@challenge.Id" class="challenge-display-container">
+                <form class="action-button" method="post">
+                    <button id="btnUnsave" onclick="remove(@challenge.Id)" class="mdl-button mdl-js-button mdl-button--icon" type="submit">
+                        <i class="material-icons action-icon">delete</i>
+                    </button>
+                </form>
+            <div class="partial-challenge-container">
+                <partial name="~/Views/Shared/_ChallengeCardDisplayPartial.cshtml" for="@challenge" />
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function remove(challengeId) {
+         var unsaveButton  = $("#btnUnsave");
+            unsaveButton.attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("UnsaveChallenge", "UserActions")',
+                data: JSON.stringify({
+                    'ChallengeId': challengeId,
+                }),
+                contentType: "application/json",
+                success: function () {
+                    $("#Challenge-" + challengeId).remove();
+                },
+                error: function () {
+                    alert("Error removing challenge");
+                    unsaveButton.attr("disabled", false);
+                }
+            });
+            return false;
+        }
+    </script>
+}

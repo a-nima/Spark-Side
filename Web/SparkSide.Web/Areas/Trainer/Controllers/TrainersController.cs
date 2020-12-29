@@ -15,6 +15,5 @@
     [Area("Trainer")]
     public class TrainersController : BaseController
     {
-        
     }
 }

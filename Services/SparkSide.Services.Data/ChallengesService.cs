@@ -153,6 +153,54 @@
             await this.savedChallengesRepository.SaveChangesAsync();
         }
 
+        public async Task RemoveFromSavedAsync(string userId, int challengeId)
+        {
+            UserChallengeFavourite current = this.savedChallengesRepository
+                .All()
+                .Where(c => c.UserId == userId && c.ChallengeId == challengeId)
+                .FirstOrDefault();
+
+            if (current != null)
+            {
+                this.savedChallengesRepository.HardDelete(current);
+                await this.savedChallengesRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddToStartedAsync(string userId, int challengeId)
+        {
+            UserChallengeActive entity = new UserChallengeActive();
+            entity.ChallengeId = challengeId;
+            entity.UserId = userId;
+
+            Challenge challenge = this.challengesRepository
+                .All()
+                .Where(c => c.Id == challengeId)
+                .FirstOrDefault();
+
+            if (challenge == null)
+            {
+                throw new ArgumentException("Can't find challenge with id " + challengeId);
+            }
+
+            challenge.UsersWithActiveChallenge.Add(entity);
+            await this.startedChallengesRepository.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromStartedAsync(string userId, int challengeId)
+        {
+            UserChallengeActive current = this.startedChallengesRepository
+                .All()
+                .Where(c => c.UserId == userId && c.ChallengeId == challengeId)
+                .FirstOrDefault();
+
+            if (current != null)
+            {
+                this.startedChallengesRepository.HardDelete(current);
+                await this.startedChallengesRepository.SaveChangesAsync();
+            }
+        }
+
         public async Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string path)
         {
             //TODO: Add days count
