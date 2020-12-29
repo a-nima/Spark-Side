@@ -16,14 +16,17 @@
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly IChallengesService challengesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public UsersController(
             IUsersService usersService,
+            IChallengesService challengesService,
             UserManager<ApplicationUser> userManager)
         {
             this.usersService = usersService;
             this.userManager = userManager;
+            this.challengesService = challengesService;
         }
 
         [Authorize]
@@ -52,6 +55,15 @@
             model.User = targetUser;
             model.IsCurrentUser = isCurrentUser;
             model.IsFollowing = isFollowing;
+            model.IsTrainer = await this.usersService.IsInRoleAsync(targetUser.Id, GlobalConstants.TrainerRoleName);
+            model.IsAdmin = await this.usersService.IsInRoleAsync(targetUser.Id, GlobalConstants.AdministratorRoleName);
+            model.Challenges = this.challengesService.GetUserStartedChallenges(targetUser.Id);
+
+            if (model.IsTrainer)
+            {
+                model.Challenges = this.challengesService.GetUserCreatedChallenges(targetUser.Id);
+            }
+
             return this.View(model);
         }
 

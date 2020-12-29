@@ -64,7 +64,17 @@
                 .ToList();
         }
 
-        public ICollection<ActiveChallengeDTO> GetUserStartedChallenges(string userId)
+        public ICollection<ChallengeDTO> GetUserStartedChallenges(string userId)
+        {
+            return this.challengesRepository
+               .All()
+               .Include(c => c.Author)
+               .Where(c => c.UsersWithActiveChallenge.Any(u => u.UserId == userId))
+               .Select(c => new ChallengeDTO(c))
+               .ToList();
+        }
+
+        public ICollection<ActiveChallengeDTO> GetUserStartedChallengesStats(string userId)
         {
             ICollection<ActiveChallengeDTO> challenges = this.challengesRepository
                 .All()

@@ -1,5 +1,6 @@
 ﻿namespace SparkSide.Services.Data.Models
 {
+    using SparkSide.Common;
     using SparkSide.Data.Models;
 
     public class UserDTO
@@ -34,5 +35,6 @@
         public string ProfilePictureLink { get; set; }
 
         public string ProfileDescription { get; set; }
+
     }
 }

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SparkSide.Data.Common.Repositories;
     using SparkSide.Data.Models;
@@ -15,11 +16,17 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<UserFollow> userFollowRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UsersService(IDeletableEntityRepository<ApplicationUser> usersRepository, IDeletableEntityRepository<UserFollow> userFollowRepository)
+
+        public UsersService(
+            IDeletableEntityRepository<ApplicationUser> usersRepository,
+            IDeletableEntityRepository<UserFollow> userFollowRepository,
+            UserManager<ApplicationUser> userManager)
         {
             this.usersRepository = usersRepository;
             this.userFollowRepository = userFollowRepository;
+            this.userManager = userManager;
         }
 
         public UserDTO GetById(string id)
@@ -77,6 +84,20 @@
             this.userFollowRepository.HardDelete(followEntity);
 
             await this.userFollowRepository.SaveChangesAsync();
+        }
+
+        public Task<bool> IsInRoleAsync(string id, string roleName)
+        {
+            ApplicationUser user = this.usersRepository
+                .All()
+                .Where(u => u.Id == id)
+                .FirstOrDefault();
+            if (user != null)
+            {
+                return this.userManager.IsInRoleAsync(user, roleName);
+            }
+
+            return Task.FromResult(false);
         }
     }
 }

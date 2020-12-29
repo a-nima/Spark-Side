@@ -36,17 +36,54 @@
         <div class="mdl-cell mdl-cell--6-col profile-info-container">
             <div class="profile-header">
                 <span><strong>@Model.User.FirstName @Model.User.LastName</strong></span>
-                @if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
+                @if (Model.IsTrainer)
                 {
                     <span class="profile-role">Trainer</span>
                 }
-                else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                else if (Model.IsAdmin)
                 {
                     <span class="profile-role">Admin</span>
                 }
             </div>
             <div class="profile-description">
                 <p>@Model.User.ProfileDescription</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+            <div class="mdl-tabs__tab-bar">
+                <a href="#feedPanel" class="mdl-tabs__tab is-active">Feed</a>
+                @if (Model.IsTrainer)
+                {
+                    <a href="#challengesPanel" class="mdl-tabs__tab">Challenges</a>
+                }
+                <a href="#startedChallengesPanel" class="mdl-tabs__tab">Started Challenges</a>
+            </div>
+
+            <div class="mdl-tabs__panel is-active" id="feedPanel">
+                <center>
+
+                </center>
+            </div>
+            @if (Model.IsTrainer)
+            {
+                <div class="mdl-tabs__panel" id="challengesPanel">
+                    <center>
+                        @foreach (var challenge in Model.Challenges)
+                        {
+                            <partial name="~/Views/Shared/_ChallengeCardDisplayPartial.cshtml" for="@challenge" />
+                        }
+                    </center>
+                </div>
+            }
+            <div class="mdl-tabs__panel" id="startedChallengesPanel">
+                <center>
+                    @foreach (var challenge in Model.StartedChallenges)
+                    {
+                        <partial name="~/Views/Shared/_ChallengeCardDisplayPartial.cshtml" for="@challenge" />
+                    }
+                </center>
             </div>
         </div>
     </div>

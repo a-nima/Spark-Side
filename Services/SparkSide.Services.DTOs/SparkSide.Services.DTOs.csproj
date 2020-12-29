@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SparkSide.Data.Models\SparkSide.Data.Models.csproj" />
+    <ProjectReference Include="..\..\SparkSide.Common\SparkSide.Common.csproj" />
   </ItemGroup>
 
 </Project>

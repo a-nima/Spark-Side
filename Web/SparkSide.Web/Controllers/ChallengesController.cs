@@ -62,7 +62,7 @@
         public IActionResult Started()
         {
             string userId = this.userManager.GetUserId(this.User);
-            ICollection<ActiveChallengeDTO> challenges = this.challengesService.GetUserStartedChallenges(userId);
+            ICollection<ActiveChallengeDTO> challenges = this.challengesService.GetUserStartedChallengesStats(userId);
 
             return this.View(challenges);
         }

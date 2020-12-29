@@ -192,6 +192,12 @@ h3 {
         white-space: nowrap;
     }
 
+.mdl-tabs__panel .mdl-card {
+    width: 45% !important;
+    display: inline-flex;
+    margin: 10px;
+}
+
 .profile-col {
     width: auto;
 }
