@@ -55,5 +55,10 @@
             model.User = new UserDTO(currentUser);
             return this.View(model);
         }
+
+        public IActionResult About()
+        {
+            return this.View();
+        }
     }
 }

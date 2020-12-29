@@ -260,6 +260,14 @@ h3 {
     Page 
 */
 
+.max-width {
+    width: 100%;
+}
+
+.inner-content {
+    margin: 20px;
+}
+
 .content-container {
     margin-top: 10px;
 }

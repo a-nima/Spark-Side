@@ -59,10 +59,10 @@
         }
 
         [Authorize]
-        public IActionResult Followed()
+        public IActionResult Started()
         {
             string userId = this.userManager.GetUserId(this.User);
-            ICollection<ActiveChallengeDTO> challenges = this.challengesService.GetUserFollowedChallenges(userId);
+            ICollection<ActiveChallengeDTO> challenges = this.challengesService.GetUserStartedChallenges(userId);
 
             return this.View(challenges);
         }

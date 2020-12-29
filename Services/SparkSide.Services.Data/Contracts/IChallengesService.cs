@@ -15,7 +15,7 @@
 
         ICollection<ChallengeDTO> GetUserSavedChallenges(string userId);
 
-        ICollection<ActiveChallengeDTO> GetUserFollowedChallenges(string userId);
+        ICollection<ActiveChallengeDTO> GetUserStartedChallenges(string userId);
 
         ICollection<ChallengeDTO> GetUserCreatedChallenges(string userId);
 

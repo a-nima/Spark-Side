@@ -64,7 +64,7 @@
                 .ToList();
         }
 
-        public ICollection<ActiveChallengeDTO> GetUserFollowedChallenges(string userId)
+        public ICollection<ActiveChallengeDTO> GetUserStartedChallenges(string userId)
         {
             ICollection<ActiveChallengeDTO> challenges = this.challengesRepository
                 .All()
