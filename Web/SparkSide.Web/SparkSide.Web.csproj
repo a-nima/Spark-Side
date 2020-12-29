@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\SparkSide.Services.DTOs\SparkSide.Services.DTOs.csproj" />
     <ProjectReference Include="..\..\SparkSide.Common\SparkSide.Common.csproj" />
     <ProjectReference Include="..\..\Data\SparkSide.Data.Models\SparkSide.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\SparkSide.Data\SparkSide.Data.csproj" />

@@ -42,10 +42,12 @@
                     <td>
                         @if (!challenge.IsPublished)
                         {
-                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                               asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Publish" asp-route-id="@challenge.Id">
-                                Publish
-                            </a>
+                            <form class="form-button" method="post">
+                                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                   asp-area="Trainer" asp-controller="ChallengesManager" asp-action="Publish" asp-route-id="@challenge.Id">
+                                    Publish
+                                </button>
+                            </form>
                         }
                     </td>
                     <td>
