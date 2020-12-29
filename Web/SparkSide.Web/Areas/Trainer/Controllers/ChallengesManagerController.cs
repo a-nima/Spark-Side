@@ -86,15 +86,22 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditChallengeInputModel collection)
+        public async Task<IActionResult> Edit(int id, EditChallengeInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
             try
             {
                 ChallengeDTO challenge = await this.challengesService.GetByIdAsync(id);
 
                 if (challenge != null && !challenge.IsPublished)
                 {
-                    return RedirectToAction(nameof(Index));
+                    await this.challengesService.UpdateAsync(id, input);
+
+                    return this.RedirectToAction("Details", "Challenges", new { area = "", id = id });
                 }
                 else
                 {
@@ -103,7 +110,7 @@
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 

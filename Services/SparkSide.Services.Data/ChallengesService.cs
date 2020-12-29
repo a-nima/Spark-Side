@@ -175,8 +175,6 @@
 
             if (input.Image != null)
             {
-
-                // /wwwroot/images/recipes/jhdsi-343g3h453-=g34g.jpg
                 Directory.CreateDirectory($"{path}/challenges/");
 
                 var extension = Path.GetExtension(input.Image.FileName).TrimStart('.');
@@ -192,11 +190,34 @@
                     await input.Image.CopyToAsync(fileStream);
                 }
 
-                challenge.PictureLink = physicalPath;
+                challenge.PictureLink = $"~/images/challenges/{challenge.Id}.{extension}";
                 await this.challengesRepository.SaveChangesAsync();
             }
 
             return challenge.Id;
+        }
+
+        public async Task UpdateAsync(int id, EditChallengeInputModel input)
+        {
+            Challenge challenge = this.challengesRepository
+                .All()
+                .Include(c => c.Tags)
+                    .ThenInclude(t => t.Tag)
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            if (challenge == null)
+            {
+                throw new ArgumentException("Can't find challenge with id " + id);
+            }
+
+            challenge.Title = input.Title;
+            challenge.Description = input.Description;
+            challenge.DurationDays = input.DurationDays;
+
+            await this.challengesRepository.SaveChangesAsync();
+
+            await this.tagsService.UpdateTagsAsync(challenge, input.Tags);
         }
     }
 }

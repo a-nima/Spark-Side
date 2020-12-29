@@ -1023,17 +1023,13 @@ namespace SparkSide.Data.Migrations
 
             modelBuilder.Entity("SparkSide.Data.Models.UserChallengeActive", b =>
                 {
-                    b.HasOne("SparkSide.Data.Models.Challenge", null)
+                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
                         .WithMany("UsersWithActiveChallenge")
                         .HasForeignKey("ChallengeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SparkSide.Data.Models.Challenge", "Challenge")
-                        .WithMany()
-                        .HasForeignKey("ChallengeId1");
-
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", null)
+                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
                         .WithMany("ActiveChallenges")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1051,7 +1047,7 @@ namespace SparkSide.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SparkSide.Data.Models.ApplicationUser", null)
+                    b.HasOne("SparkSide.Data.Models.ApplicationUser", "User")
                         .WithMany("FavouriteChallenges")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);

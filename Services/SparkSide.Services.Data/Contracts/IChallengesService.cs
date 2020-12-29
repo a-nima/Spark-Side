@@ -30,6 +30,8 @@
 
         Task AddToSavedAsync(string userId, int challengeId);
 
-        Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string v);
+        Task<int> CreateAsync(CreateChallengeInputModel input, string userId, string path);
+
+        Task UpdateAsync(int id, EditChallengeInputModel input);
     }
 }

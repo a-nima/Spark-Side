@@ -66,6 +66,30 @@
             }
         }
 
+        public async Task UpdateTagsAsync(Challenge challenge, ICollection<string> tags)
+        {
+            List<ChallengeTag> currentTags = challenge.Tags.ToList();
+            List<string> currentTagsNames = currentTags.Select(c => c.Tag.Title).ToList();
 
+            foreach (ChallengeTag challengeTag in currentTags)
+            {
+                if (!tags.Contains(challengeTag.Tag.Title))
+                {
+                    this.challengeTagsRepository.HardDelete(challengeTag);
+                }
+            }
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                string tag = tags.ElementAt(i);
+
+                if (!currentTagsNames.Contains(tag))
+                {
+                    await this.AddTag(challenge.Id, tag);
+                }
+            }
+
+            await this.challengeTagsRepository.SaveChangesAsync();
+        }
     }
 }

@@ -25,10 +25,10 @@
                 <span class="textfield__error" asp-validation-for="Description"></span>
             </div>
             @*<br />
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="file" asp-for="Image">
-                <span class="textfield__error" asp-validation-for="Image"></span>
-            </div>*@
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="file" asp-for="Image">
+                    <span class="textfield__error" asp-validation-for="Image"></span>
+                </div>*@
             <br />
             <div class="mdl-textfield mdl-js-textfield">
                 <input class="mdl-textfield__input" type="text" id="tagInput">
@@ -38,7 +38,16 @@
             <a id="addTag" onclick="addTag()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
                 <i class="material-icons">add</i>
             </a>
-            <div id="tagsContainer"></div>
+            <div id="tagsContainer">
+                @for (int i = 0; i < Model.Tags.Count; i++)
+                {
+                    <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                        <span class="mdl-chip__text">@Model.Tags.ElementAt(i)</span>
+                        <input hidden type="text" value="@Model.Tags.ElementAt(i)" name="Tags[@i]" />
+                        <button type="button" onclick="removeTag('@Model.Tags.ElementAt(i)')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                    </span>
+                }
+            </div>
             <br />
             <input id="durationDays" class="mdl-textfield__input" asp-for="DurationDays" type="hidden">
             <input type="hidden" asp-for="Id" />
@@ -57,6 +66,11 @@
     <script>
         var tags = [];
 
+        $(".mdl-chip__text").each(function () {
+            tags.push($(this).text());
+        });
+        console.log(tags);
+
         function addTag() {
             let tagInput = $("#tagInput");
             let tag = tagInput.val().trim().toLowerCase();
@@ -70,11 +84,11 @@
 
             $("#tagsContainer")
                 .append(`
-                            <span class="tag-chip-container mdl-chip mdl-chip--deletable">
-                                <span class="mdl-chip__text">${tag}</span>
-                                <input hidden type="text" value="${tag}" name="Tags[${tags.length}]"/>
-                                <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                            </span>`);
+                                <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                                    <span class="mdl-chip__text">${tag}</span>
+                                    <input hidden type="text" value="${tag}" name="Tags[${tags.length}]"/>
+                                    <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                                </span>`);
             tags.push(tag);
             tagInput.val("");
         }
@@ -88,11 +102,11 @@
 
                 $("#tagsContainer")
                     .append(`
-                                <span class="tag-chip-container mdl-chip mdl-chip--deletable">
-                                    <span class="mdl-chip__text">${tag}</span>
-                                    <input hidden type="text" value="${tag}" name="Tags[${i}]"/>
-                                    <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                                </span>`);
+                                    <span class="tag-chip-container mdl-chip mdl-chip--deletable">
+                                        <span class="mdl-chip__text">${tag}</span>
+                                        <input hidden type="text" value="${tag}" name="Tags[${i}]"/>
+                                        <button type="button" onclick="removeTag('${tag}')" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                                    </span>`);
             }
         }
     </script>

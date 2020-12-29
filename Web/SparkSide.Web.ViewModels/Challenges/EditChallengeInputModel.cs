@@ -7,6 +7,8 @@
 
     public class EditChallengeInputModel : CreateChallengeInputModel
     {
+        public EditChallengeInputModel()
+        { }
 
         public EditChallengeInputModel(ChallengeDTO challenge)
             : base(challenge)
